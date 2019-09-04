@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class Restarter : MonoBehaviour {
 	void Update(){
-		if (Input.GetKeyDown("space")){
+		if (Input.GetKeyDown(KeyCode.R)){
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
-		if (Input.GetKeyDown("escape")){
-			Application.Quit();
-		}
+		//if (Input.GetKeyDown("escape")){
+		//	Application.Quit();
+		//}
 	}
 }

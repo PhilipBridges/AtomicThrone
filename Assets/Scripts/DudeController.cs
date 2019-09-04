@@ -6,9 +6,9 @@ public class DudeController : MonoBehaviour
 {
     Animator anim;
     new Rigidbody2D rigidbody;
-    public bool open = false;
+    //public bool open = false;
 
-    public GameObject menu;
+    //public GameObject menu;
     public GameObject projectilePrefab;
 
     private AudioSource audioSource;
@@ -18,31 +18,43 @@ public class DudeController : MonoBehaviour
 
     Vector2 movementDirection;
     Vector2 lookDirection = new Vector2(1, 0);
-    
-    public int maxHealth = 5;
-    public float playerSpeed = 6f;
-    public float timeInvincible = 1.0f;
-    public int health { get { return currentHealth; } }
-    int currentHealth;
+
+    //Player things ---------------------------
+    public static float maxHealth = 5;
+    public static float playerSpeed = 6f;
+    public static float timeInvincible = 1.0f;
+    public static bool canShoot = true;
+    public static float cooldown = 0.4f;
+    public static int currentMoney;
+    public static int currentXp;
+    public static int level;
+    public static float requiredXp = 100;
+    public static int totalXp;
+    public static float currentHealth;
+    public static int statPoints;
+    public static int perkPoints;
+
+    //----------------------------------------
+
     float invincibleTimer;
     bool isInvincible;
     float deathDelay = 4.0f;
     private bool dead = false;
     bool damaged = false;
-    private float cooldown = 0.1f;
-    private bool canShoot = true;
-    public static int currentMoney;
     SpriteRenderer rend;
 
-    // Start is called before the first frame update
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
         rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rend = GetComponent<SpriteRenderer>();
-        menu.gameObject.SetActive(false);
-        currentHealth = maxHealth;
+        PlayerUI.instance.SetValue(currentXp);
+        canShoot = true;
+        if (currentXp == 0)
+        {
+            currentHealth = maxHealth;
+        }
     }
 
     public void PlaySound(AudioClip clip)
@@ -53,7 +65,6 @@ public class DudeController : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (currentHealth <= 0)
@@ -72,8 +83,6 @@ public class DudeController : MonoBehaviour
         MoveDown();
         MoveLeft();
         MoveRight();
-        OpenMenu();
-        CloseMenu();
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -120,9 +129,12 @@ public class DudeController : MonoBehaviour
                 isInvincible = false;
         }
 
-        if (Input.GetKey(KeyCode.Mouse0) && canShoot == true && !dead && !open)
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            StartCoroutine(Launch());
+            if (!dead && canShoot)
+            {
+                StartCoroutine(Launch());
+            }
         }
     }
 
@@ -162,6 +174,24 @@ public class DudeController : MonoBehaviour
     public void ChangeMoney(int amount)
     {
         currentMoney += amount;
+    }
+
+    public void ChangeXp(int amount)
+    {
+        currentXp = currentXp + amount;
+        totalXp = totalXp + amount;
+        PlayerUI.instance.SetValue(currentXp);
+        if (currentXp >= requiredXp)
+        {
+            level++;
+            currentXp = 0;
+            requiredXp = requiredXp * 1.1f;
+            PlayerUI.instance.SetValue(0);
+            perkPoints++;
+            statPoints++;
+            LevelEnd.instance.IncreaseStatPoints();
+            LevelEnd.instance.IncreasePerkPoints();
+        }
     }
     IEnumerator Launch()
     {
@@ -266,40 +296,6 @@ public class DudeController : MonoBehaviour
         {
             anim.SetTrigger("IdleRight");
         }
-    }
-
-    void OpenMenu()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape)){
-            StartCoroutine(MenuCooldown(true));
-            menu.SetActive(true);
-        }
-    }
-
-    public void CloseMenu()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape) && open)
-        {
-            StartCoroutine(MenuCooldown(false));
-            menu.SetActive(false);
-        }
-    }
-
-    public void BackClick()
-    {
-        StartCoroutine(MenuCooldown(false));
-        menu.SetActive(false);
-    }
-
-    IEnumerator MenuCooldown(bool val)
-    {
-        yield return new WaitForSeconds(.1f);
-        open = val;
-    }
-
-    public void QuitToMenu()
-    {
-        Manager.BackToMenu();
     }
 }
 

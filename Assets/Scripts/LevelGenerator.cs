@@ -28,25 +28,31 @@ public class LevelGenerator : MonoBehaviour {
 	float percentToFill = 0.5f; 
 	public GameObject waterObj, floorObj, wallObj;
 	//for enemy generation
-	public int enemyCount = 12;
+	public int enemiesToSpawn = 12;
 	public GameObject enemy;
 	[Range(1, 25)]
-	public int spawnChance;
+	public int spawnChance = 5;
 	Task task;
 	//---
 
-	bool ready = false;
-	void Start () {
+	//For level manager-----
+	static public int enemiesLeft;
+	//---------------
+
+	public GameObject player;
+	bool spawnPicked = false;
+
+	public void Start () {
 		Setup();
 		CreateFloors();
 		CreateWalls();
 		RemoveSingleWalls();
 		TwoGap();
 		SpawnLevel();
-        Nav.LoadNav();
-        SpawnEnemies();
-
-    }
+		Nav.LoadNav();
+		SpawnpointSearch();
+		SpawnEnemies();
+	}
 	void Setup(){
 		//find grid size
 		roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
@@ -249,31 +255,72 @@ public class LevelGenerator : MonoBehaviour {
 			}
 		}
 	}
-    void SpawnEnemies(){
-    	for (int x = 0; x < roomWidth; x++){
-    		for (int y = 0; y < roomHeight; y++){
-    			switch(grid[x,y]){
-    				case gridSpace.floor:
-                        SpawnSingleEnemy(x,y);
-    					break;
-    			}
-    		}
-    	}
-    }
-    
-    void SpawnSingleEnemy(int x, int y)
-    {
-        Vector2 offset = roomSizeWorldUnits / 2.0f;
-        Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
-    
-        int rand = Mathf.FloorToInt(Random.value * 100.00f);
-        if (enemyCount > 0 && rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
-        {
-            Vector3 spawnVec = Vector3Int.FloorToInt(new Vector2(x, y) * worldUnitsInOneGridCell - offset);
-            Instantiate(enemy, spawnVec, Quaternion.identity);
-            --enemyCount;
-        }
-    }
+
+	void SpawnpointSearch()
+	{
+		for (int x = 0; x < roomWidth; x++)
+		{
+			for (int y = 0; y < roomHeight; y++)
+			{
+				if(grid[x,y] == gridSpace.floor && !spawnPicked && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
+				{
+					float rand = Random.Range(1, 100);
+					if(rand < 15)
+					{
+						SpawnPlayer(x, y);
+						spawnPicked = true;
+					}
+				}
+			}
+		}
+		if (!spawnPicked)
+		{
+			SpawnpointSearch(); 
+		}
+	}
+
+	void SpawnPlayer(int x, int y)
+	{
+		Vector2 offset = roomSizeWorldUnits / 2.0f;
+		Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
+
+		Vector3 spawnVec = Vector3Int.FloorToInt(spawnPos);
+		Instantiate(player, spawnVec, Quaternion.identity);
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
+	void SpawnEnemies(){
+		for (int x = 0; x < roomWidth; x++){
+			for (int y = 0; y < roomHeight; y++){
+				switch(grid[x,y]){
+					case gridSpace.floor:
+						SpawnSingleEnemy(x,y);
+						break;
+				}
+			}
+		}
+		LevelManager.remainingEnemies = enemiesLeft;
+		enemiesLeft = 0;
+	}
+	
+	void SpawnSingleEnemy(int x, int y)
+	{
+		Vector2 offset = roomSizeWorldUnits / 2.0f;
+		Vector2 spawnPos = new Vector2(x, y) * worldUnitsInOneGridCell - offset;
+
+		float rand = Random.Range(1, 100);
+		float distance = Vector3.Distance(new Vector3(x, y), new Vector3(player.transform.position.x, player.transform.position.y));
+		if (distance > 60f)
+		{
+			if (enemiesToSpawn > 0 && rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
+			{
+				Vector3 spawnVec = Vector3Int.FloorToInt(spawnPos);
+				Instantiate(enemy, spawnVec, Quaternion.identity);
+				enemiesToSpawn--;
+				enemiesLeft++;
+			}
+		}
+	}
 	Vector2 RandomDirection(){
 		//pick random int between 0 and 3
 		int choice = Mathf.FloorToInt(Random.value * 3.99f);
@@ -321,14 +368,5 @@ public class LevelGenerator : MonoBehaviour {
 			Vector3Int wallVec = Vector3Int.FloorToInt(new Vector2(x, y) * worldUnitsInOneGridCell - offset);
 			wallMap.SetTile(wallVec, wallTile);
 		}
-        //int rand = Mathf.FloorToInt(Random.value * 100.00f);
-
-        //if (toSpawn == floorObj && enemyCount > 0)
-        //    if (rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
-        //    {
-        //        Vector3 spawnVec = Vector3Int.FloorToInt(new Vector2(x, y) * worldUnitsInOneGridCell - offset);
-        //        Instantiate(enemy, spawnVec, Quaternion.identity);
-        //        --enemyCount;
-        //    }
-    }
+	}
 }

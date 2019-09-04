@@ -42,6 +42,7 @@ public class EnemyController : MonoBehaviour
         playerLoc = player.transform.position;
         timer = 1.0f;
         smokeEffect.Stop();
+        rigidbody2D.transform.rotation = new Quaternion(0,0,0,0);
     }
 
     void Update()
@@ -140,6 +141,11 @@ public class EnemyController : MonoBehaviour
         if (this.health == 0)
         {
             playerController.ChangeMoney(1);
+            playerController.ChangeXp(10);
+            LevelManager.remainingEnemies--;
+            if (LevelManager.remainingEnemies <= 0){
+                StartCoroutine(LevelManager.WinCheck());
+            }
         }
     }
 

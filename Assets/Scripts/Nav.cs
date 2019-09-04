@@ -11,7 +11,6 @@ public class Nav : MonoBehaviour
     void Start()
     {
        nav = GetComponent<NavMeshSurface2d>();
-        //nav.BuildNavMesh(); 
     }
 
     public static IEnumerator Generate()
