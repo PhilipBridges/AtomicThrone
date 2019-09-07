@@ -23,18 +23,40 @@ public class Projectile : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (Weapons.hasShotgun)
+        {
+            StartCoroutine(KillTime(gameObject));
+        }
     }
 
+    IEnumerator KillTime(GameObject gameobject)
+    {
+        yield return new WaitForSeconds(.2f);
+        Destroy(gameObject);
+    }
     public void Launch(float force)
     {
+        if (Weapons.hasShotgun)
+        {
+            rigidbody2d.AddForce((aimDirection * .2f) * force);
+        }
         rigidbody2d.AddForce(aimDirection * force);
     }
 
     void OnCollisionEnter2D(Collision2D other)
     {
         EnemyController e = other.collider.GetComponent<EnemyController>();
+
         if (e != null)
         {
+            if (Perks.lifesteal)
+            {
+                DudeController.currentHealth += .1f;
+                DudeController.currentHealth = Mathf.Clamp(DudeController.currentHealth, 0, DudeController.maxHealth);
+                UIHealthbar.instance.SetValue(DudeController.currentHealth / (float)DudeController.maxHealth);
+            }
+
             e.Damage();
         }
 

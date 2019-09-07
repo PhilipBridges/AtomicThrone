@@ -11,7 +11,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PGScene.unity
     guid: f7c4864124b4e0144a117988fdc17a04
-  - enabled: 1
-    path: Assets/Scenes/Loading.unity
-    guid: 55a1fb597b2a336409e97095af5aaaed
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   m_configObjects: {}

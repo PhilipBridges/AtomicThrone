@@ -101,9 +101,6 @@ MonoBehaviour:
   throwSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
   shoot: {fileID: 8300000, guid: 9afd6cc7134a3428cb7606e918101f8f, type: 3}
   hitSound: {fileID: 0}
-  maxHealth: 5
-  playerSpeed: 6
-  timeInvincible: 1
 --- !u!50 &912758729794977062
 Rigidbody2D:
   serializedVersion: 4

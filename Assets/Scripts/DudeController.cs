@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,14 +27,16 @@ public class DudeController : MonoBehaviour
     public static float timeInvincible = 1.0f;
     public static bool canShoot = true;
     public static float cooldown = 0.4f;
+    public static float weaponTime = 0f;
     public static int currentMoney;
-    public static int currentXp;
-    public static int level;
+    public static float currentXp;
+    public static int level = 0;
     public static float requiredXp = 100;
-    public static int totalXp;
+    public static float totalXp;
     public static float currentHealth;
     public static int statPoints;
     public static int perkPoints;
+    List<String> myPerks = new List<String>();
 
     //----------------------------------------
 
@@ -40,7 +44,6 @@ public class DudeController : MonoBehaviour
     bool isInvincible;
     float deathDelay = 4.0f;
     private bool dead = false;
-    bool damaged = false;
     SpriteRenderer rend;
 
     void Start()
@@ -55,6 +58,7 @@ public class DudeController : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        UIHealthbar.instance.SetValue(currentHealth / (float)maxHealth);
     }
 
     public void PlaySound(AudioClip clip)
@@ -79,10 +83,14 @@ public class DudeController : MonoBehaviour
             }
         }
 
+        Win();
         MoveUp();
         MoveDown();
         MoveLeft();
         MoveRight();
+        Weapons.PistolSwitch();
+        Weapons.ShotgunSwitch();
+        Stage();
 
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
@@ -138,14 +146,27 @@ public class DudeController : MonoBehaviour
         }
     }
 
+    IEnumerator YouDied()
+    {
+        yield return new WaitForSeconds(2.5f);
+        SceneManager.LoadScene(sceneBuildIndex: 0);
+    }
 
     public void ChangeHealth(int amount)
     {
         if (dead)
         {
-            return;
+            StartCoroutine(YouDied());
         }
-        if(amount > 0)
+        if (Perks.evasion)
+        {
+            int rand = UnityEngine.Random.Range(1, 100);
+            if (rand > 75)
+            {
+                return;
+            }
+        }
+        if (amount > 0)
         {
             StartCoroutine("SwitchColorGreen");
         }
@@ -156,7 +177,6 @@ public class DudeController : MonoBehaviour
                 StartCoroutine("SwitchColorRed");
                 anim.SetTrigger("Hit");
                 PlaySound(hitSound);
-                damaged = true;
             }
             if (isInvincible)
                 return;
@@ -185,7 +205,7 @@ public class DudeController : MonoBehaviour
         {
             level++;
             currentXp = 0;
-            requiredXp = requiredXp * 1.1f;
+            requiredXp = requiredXp * 1.05f;
             PlayerUI.instance.SetValue(0);
             perkPoints++;
             statPoints++;
@@ -196,14 +216,35 @@ public class DudeController : MonoBehaviour
     IEnumerator Launch()
     {
         canShoot = false;
-        GameObject projectileObject = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
+        if (Weapons.hasPistol)
+        {
+            GameObject projectileObject = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
 
-        Projectile projectile = projectileObject.GetComponent<Projectile>();
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
 
-        projectile.Launch(700);
-        PlaySound(shoot);
-        PlaySound(throwSound);
-        yield return new WaitForSeconds(cooldown);
+            projectile.Launch(700);
+            PlaySound(shoot);
+            PlaySound(throwSound);
+        }
+
+        if (Weapons.hasShotgun)
+        {
+            GameObject shotgunShell1 = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.3f, Quaternion.identity);
+            GameObject shotgunShell2 = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.4f + lookDirection * 0.4f, Quaternion.identity);
+            GameObject shotgunShell3 = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.6f + lookDirection * 0.6f, Quaternion.identity);
+
+            Projectile projectile1 = shotgunShell1.GetComponent<Projectile>();
+            Projectile projectile2 = shotgunShell2.GetComponent<Projectile>();
+            Projectile projectile3 = shotgunShell3.GetComponent<Projectile>();
+
+            projectile1.Launch(700);
+            projectile2.Launch(700);
+            projectile3.Launch(700);
+            PlaySound(shoot);
+            PlaySound(throwSound);
+        }
+        
+        yield return new WaitForSeconds(cooldown + weaponTime);
         canShoot = true;
     }
 
@@ -212,7 +253,6 @@ public class DudeController : MonoBehaviour
         rend.material.color = new Color(1f, 0.30196078f, 0.30196078f);
         yield return new WaitForSeconds(.3f);
         rend.material.color = Color.white;
-        damaged = false;
     }
 
     IEnumerator SwitchColorGreen()
@@ -220,9 +260,7 @@ public class DudeController : MonoBehaviour
         rend.material.color = new Color(.05f, 1f, 0f);
         yield return new WaitForSeconds(.3f);
         rend.material.color = Color.white;
-        damaged = false;
     }
-
 
     void CheckAndMove()
     {
@@ -295,6 +333,28 @@ public class DudeController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.D))
         {
             anim.SetTrigger("IdleRight");
+        }
+    }
+
+    void Stage()
+    {
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            LevelManager.stage++;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            ChangeXp(100);
+            currentHealth = maxHealth;
+        }
+    }
+
+    void Win()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            StartCoroutine(LevelManager.WinCheck());
         }
     }
 }

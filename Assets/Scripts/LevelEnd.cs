@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class LevelEnd : MonoBehaviour
@@ -23,6 +24,9 @@ public class LevelEnd : MonoBehaviour
     public Button perk2button;
     public Button perk3button;
 
+    public static List<String> randPerks = new List<String>();
+    public static List<String> perkPool = Perks.allPerks;
+    public static bool newGame = true;
     public static LevelEnd instance { get; private set; }
     void Awake()
     {
@@ -37,12 +41,38 @@ public class LevelEnd : MonoBehaviour
             levelEndCanvas.enabled = false;
         }
 
-        asText.text = "Attack Speed: " + DudeController.cooldown.ToString();
+        asText.text = "Atk Speed: " + DudeController.cooldown.ToString();
         healthText.text = "Max Health: " + DudeController.maxHealth.ToString();
         msText.text = "Move Speed: " + DudeController.playerSpeed.ToString();
         statPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
         perkPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
 
+        randPerks.Clear();
+
+        GenPerks();
+    }
+
+    public void GenPerks()
+    {
+        while (randPerks.Count < 4)
+        {
+            if (perkPool.Count > 0)
+            {
+                int rand = UnityEngine.Random.Range(0, perkPool.Count - 1);
+                if (!randPerks.Contains(perkPool[rand]))
+                {
+                    randPerks.Add(perkPool[rand]);
+                }
+            }
+        }
+        perk1Text.text = randPerks[0];
+        perk1button.name = randPerks[0];
+
+        perk2Text.text = randPerks[1];
+        perk2button.name = randPerks[1];
+
+        perk3Text.text = randPerks[2];
+        perk3button.name = randPerks[2];
     }
 
     public void OpenCanvas()
@@ -61,20 +91,27 @@ public class LevelEnd : MonoBehaviour
         }
     }
 
-    public void ChoosePerk(Button.ButtonClickedEvent but)
+    public void ChoosePerk()
     {
-        Text choice = perk1button.GetComponentInParent<Text>();
-        Debug.Log(choice.text);
+        if (DudeController.perkPoints > 0)
+        {
+            DudeController.perkPoints--;
+            string choice = EventSystem.current.currentSelectedGameObject.name;
+            perkPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
+            Perks.PerkCheck(choice);
+            perkPool.Remove(choice);
+        }
     }
 
     public void IncreaseAttackSpeed()
     {
         if (DudeController.statPoints > 0)
         {
+            DudeController.statPoints--;
             var currentAttackSpeed = DudeController.cooldown;
             DudeController.cooldown = currentAttackSpeed - .02f;
-            asText.text = "Attack Speed: " + DudeController.cooldown.ToString();
-            DudeController.statPoints--;
+            asText.text = "Atk Speed: " + DudeController.cooldown.ToString();
+            statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         }
     }
 
@@ -82,10 +119,11 @@ public class LevelEnd : MonoBehaviour
     {
         if (DudeController.statPoints > 0)
         {
+            DudeController.statPoints--;
             DudeController.maxHealth += .5f;
             DudeController.currentHealth = DudeController.maxHealth;
             healthText.text = "Max Health: " + DudeController.maxHealth.ToString();
-            DudeController.statPoints--;
+            statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         }
     }
 
@@ -93,9 +131,10 @@ public class LevelEnd : MonoBehaviour
     {
         if (DudeController.statPoints > 0)
         {
+            DudeController.statPoints--;
             DudeController.playerSpeed += .1f;
             msText.text = "Move Speed: " + DudeController.playerSpeed.ToString();
-            DudeController.statPoints--;
+            statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         }
     }
 

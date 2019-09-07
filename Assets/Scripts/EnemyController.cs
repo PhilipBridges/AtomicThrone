@@ -14,20 +14,18 @@ public class EnemyController : MonoBehaviour
 
     private Renderer rend;
     private new AudioSource audio;
-    new Rigidbody2D rigidbody2D;
+    public new Rigidbody2D rigidbody2D;
     Animator animator;
     bool broken = true;
     float timer;
     float resetTime = 1.0f;
     private float distanceToPlayer;
 
-    public int health = 5;
+    private int health = 1;
     private bool damaged = false;
     //Color lerp stuff 
     Color colorStart = Color.red;
     Color colorEnd = Color.white;
-    float duration = 0.2f;
-    private readonly float t = 0;
     //---
     void Start()
     {
@@ -118,7 +116,6 @@ public class EnemyController : MonoBehaviour
             damaged = true;
             StartCoroutine("SwitchColor");
         }
-        
         health -= 1;
     }
 
@@ -141,8 +138,9 @@ public class EnemyController : MonoBehaviour
         if (this.health == 0)
         {
             playerController.ChangeMoney(1);
-            playerController.ChangeXp(10);
+            playerController.ChangeXp(11);
             LevelManager.remainingEnemies--;
+            Debug.Log("REMAINING - " + LevelManager.remainingEnemies);
             if (LevelManager.remainingEnemies <= 0){
                 StartCoroutine(LevelManager.WinCheck());
             }

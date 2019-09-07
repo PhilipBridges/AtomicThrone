@@ -7,7 +7,7 @@ public class LevelManager : MonoBehaviour
 {
     public static int stage;
     public static int difficulty;
-    public static int remainingEnemies;
+    public static int remainingEnemies = 0;
     void Start()
     {
     }
@@ -34,15 +34,18 @@ public class LevelManager : MonoBehaviour
         remainingEnemies = 0;
         stage++;
 
+
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneBuildIndex: 1);
         asyncOperation.allowSceneActivation = false;
+        LevelEnd.instance.OpenCanvas();
         while (!asyncOperation.isDone)
         {
-
             yield return null;
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 asyncOperation.allowSceneActivation = true;
+
             }
         }
     }
