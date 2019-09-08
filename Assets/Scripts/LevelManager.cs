@@ -33,19 +33,22 @@ public class LevelManager : MonoBehaviour
     {
         remainingEnemies = 0;
         stage++;
+        LevelEnd.instance.OpenCanvas();
 
-
+        yield return null;
+        
         AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneBuildIndex: 1);
         asyncOperation.allowSceneActivation = false;
-        LevelEnd.instance.OpenCanvas();
+
         while (!asyncOperation.isDone)
         {
-            yield return null;
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (asyncOperation.progress >= 0.9f)
             {
-                asyncOperation.allowSceneActivation = true;
-
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    asyncOperation.allowSceneActivation = true;
+                }
+                yield return null;
             }
         }
     }

@@ -44,7 +44,7 @@ public class LevelEnd : MonoBehaviour
         asText.text = "Atk Speed: " + DudeController.cooldown.ToString();
         healthText.text = "Max Health: " + DudeController.maxHealth.ToString();
         msText.text = "Move Speed: " + DudeController.playerSpeed.ToString();
-        statPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
+        statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         perkPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
 
         randPerks.Clear();

@@ -135,7 +135,7 @@ public class EnemyController : MonoBehaviour
         audio.Stop();
         smokeEffect.Play();
         DudeController playerController = player.gameObject.GetComponent<DudeController>();
-        if (this.health == 0)
+        if (this.health <= 0)
         {
             playerController.ChangeMoney(1);
             playerController.ChangeXp(11);

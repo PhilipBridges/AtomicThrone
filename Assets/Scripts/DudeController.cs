@@ -78,8 +78,7 @@ public class DudeController : MonoBehaviour
             deathDelay -= Time.deltaTime;
             if (deathDelay <= 0)
             {
-                Scene thisScene = SceneManager.GetActiveScene();
-                SceneManager.LoadScene(thisScene.name);
+                SceneManager.LoadScene(sceneBuildIndex: 0);
             }
         }
 
@@ -205,7 +204,7 @@ public class DudeController : MonoBehaviour
         {
             level++;
             currentXp = 0;
-            requiredXp = requiredXp * 1.05f;
+            requiredXp = requiredXp * 1.1f;
             PlayerUI.instance.SetValue(0);
             perkPoints++;
             statPoints++;
