@@ -36,7 +36,7 @@ public class DudeController : MonoBehaviour
     public static float currentHealth;
     public static int statPoints;
     public static int perkPoints;
-    List<String> myPerks = new List<String>();
+    List<String> myPerks = new List<string>();
 
     //----------------------------------------
 
@@ -79,6 +79,8 @@ public class DudeController : MonoBehaviour
             if (deathDelay <= 0)
             {
                 SceneManager.LoadScene(sceneBuildIndex: 0);
+                currentHealth = 5;
+                Weapons.PistolSwitch();
             }
         }
 
@@ -89,6 +91,8 @@ public class DudeController : MonoBehaviour
         MoveRight();
         Weapons.PistolSwitch();
         Weapons.ShotgunSwitch();
+        Weapons.MagnumSwitch();
+        Weapons.LauncherSwitch();
         Stage();
 
         float horizontal = Input.GetAxis("Horizontal");
@@ -226,6 +230,17 @@ public class DudeController : MonoBehaviour
             PlaySound(throwSound);
         }
 
+        if (Weapons.hasMagnum)
+        {
+            GameObject projectileObject = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
+
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+
+            projectile.Launch(800);
+            PlaySound(shoot);
+            PlaySound(throwSound);
+        }
+
         if (Weapons.hasShotgun)
         {
             GameObject shotgunShell1 = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.3f, Quaternion.identity);
@@ -353,7 +368,7 @@ public class DudeController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.J))
         {
-            StartCoroutine(LevelManager.WinCheck());
+            LevelManager.WinCheck();
         }
     }
 }

@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 5580295925143183373}
   - component: {fileID: 7087002404704427712}
   - component: {fileID: 5135910977535214862}
-  - component: {fileID: 647138441095120355}
   - component: {fileID: 1037437019}
+  - component: {fileID: 647138441095120355}
   - component: {fileID: 5156851664575550864}
   - component: {fileID: 3352358833151641810}
   m_Layer: 13
@@ -103,7 +103,7 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7433792909879128650, guid: af3f17f4f06a42d4cb6363363e06cdd4,
     type: 3}
   playerLoc: {x: 0, y: 0}
-  health: 5
+  rigidbody2D: {fileID: 0}
 --- !u!61 &5135910977535214862
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -117,7 +117,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.02, y: -0.39723802}
+  m_Offset: {x: -0.01999998, y: -0.04024574}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -128,8 +128,30 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.993834, y: 1.044476}
+  m_Size: {x: 0.993834, y: 1.7584605}
   m_EdgeRadius: 0
+--- !u!195 &1037437019
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948190811058006844}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 1
+  m_BaseOffset: 1
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!50 &647138441095120355
 Rigidbody2D:
   serializedVersion: 4
@@ -151,28 +173,6 @@ Rigidbody2D:
   m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!195 &1037437019
-NavMeshAgent:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5948190811058006844}
-  m_Enabled: 1
-  m_AgentTypeID: 0
-  m_Radius: 0.3
-  m_Speed: 3.5
-  m_Acceleration: 8
-  avoidancePriority: 50
-  m_AngularSpeed: 120
-  m_StoppingDistance: 0
-  m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
-  m_AutoRepath: 1
-  m_Height: 0.1
-  m_BaseOffset: 1
-  m_WalkableMask: 4294967295
-  m_ObstacleAvoidanceType: 4
 --- !u!82 &5156851664575550864
 AudioSource:
   m_ObjectHideFlags: 0

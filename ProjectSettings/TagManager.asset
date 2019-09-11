@@ -8,6 +8,10 @@ TagManager:
   - EnemyProjectile
   - Music
   - Menu
+  - MainMenuCanvas
+  - UnlockMenu
+  - MoneyText
+  - MenuSounds
   layers:
   - Default
   - TransparentFX

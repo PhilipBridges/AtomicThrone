@@ -122,10 +122,10 @@ public class LevelGenerator : MonoBehaviour {
 				thisWalker.pos += thisWalker.dir;
 				walkers[i] = thisWalker;
 			}
-			//avoid boarder of grid
+			//avoid border of grid
 			for (int i =0; i < walkers.Count; i++){
 				walker thisWalker = walkers[i];
-				//clamp x,y to leave a 1 space boarder: leave room for walls
+				//clamp x,y to leave a 1 space border: leave room for walls
 				thisWalker.pos.x = Mathf.Clamp(thisWalker.pos.x, 1, roomWidth-2);
 				thisWalker.pos.y = Mathf.Clamp(thisWalker.pos.y, 1, roomHeight-2);
 				walkers[i] = thisWalker;

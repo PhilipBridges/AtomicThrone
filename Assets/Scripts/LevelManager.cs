@@ -5,15 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
-    public static int stage;
+    public static int stage = 1;
     public static int difficulty;
     public static int remainingEnemies = 0;
+    public static bool done = false;
     void Start()
     {
     }
 
     void Update()
     {
+        if (done)
+        {
+            NextLevel();
+        }
     }
 
     private void Awake()
@@ -29,27 +34,21 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public static IEnumerator WinCheck()
+    public static void WinCheck()
     {
+        done = true;
         remainingEnemies = 0;
         stage++;
+        SaveSystem.SavePlayer();
         LevelEnd.instance.OpenCanvas();
+    }
 
-        yield return null;
-        
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneBuildIndex: 1);
-        asyncOperation.allowSceneActivation = false;
-
-        while (!asyncOperation.isDone)
+    void NextLevel()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            if (asyncOperation.progress >= 0.9f)
-            {
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    asyncOperation.allowSceneActivation = true;
-                }
-                yield return null;
-            }
+            done = false;
+            SceneManager.LoadScene(sceneBuildIndex: 1);
         }
     }
 }

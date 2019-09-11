@@ -622,7 +622,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Perk One
+  m_Text: Perk Two
 --- !u!222 &212398101
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1869,9 +1869,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_UseGeometry: 0
-  m_OverrideByGrid: 0
+  m_OverrideByGrid: 1
   m_UseMeshPrefab: {fileID: 0}
-  m_CompressBounds: 1
+  m_CompressBounds: 0
   m_OverrideVector: {x: 1, y: 1, z: 1}
   m_DefaultArea: 0
   m_IgnoreNavMeshAgent: 1
@@ -1879,7 +1879,7 @@ MonoBehaviour:
   m_OverrideTileSize: 0
   m_TileSize: 256
   m_OverrideVoxelSize: 0
-  m_VoxelSize: 0.13333334
+  m_VoxelSize: 0.033333335
   m_BuildHeightMesh: 0
   m_NavMeshData: {fileID: 0}
 --- !u!4 &525711169
@@ -1951,7 +1951,6 @@ MonoBehaviour:
   floorObj: {fileID: 4329022887390646274, guid: 4c866a9b2b1e9c7448b50fa4c1ac3510,
     type: 3}
   wallObj: {fileID: 7544762199594709445, guid: c2ac9aa7bc2e11d43843de61a73e4484, type: 3}
-  enemiesToSpawn: 10
   enemy: {fileID: 5948190811058006844, guid: 08563ddd8ed5b4f43a829253f9c3d26e, type: 3}
   spawnChance: 2
   player: {fileID: 296890718385368640, guid: a033e12918146964c96596052ae48be1, type: 3}
@@ -8997,7 +8996,7 @@ Camera:
   far clip plane: 5000
   field of view: 40
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 6.5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9241,7 +9240,7 @@ MonoBehaviour:
     type: 3}
   m_Lens:
     FieldOfView: 40
-    OrthographicSize: 6
+    OrthographicSize: 6.5
     NearClipPlane: 0.1
     FarClipPlane: 5000
     Dutch: 0
@@ -9521,8 +9520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ad980451443d70438faac0bc6c235a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 10
+  m_LookaheadTime: 0.1
+  m_LookaheadSmoothing: 5.9
   m_LookaheadIgnoreY: 0
   m_XDamping: 1
   m_YDamping: 1
@@ -11595,7 +11594,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Perk One
+  m_Text: 'Perk Three
+
+'
 --- !u!222 &2133853579
 CanvasRenderer:
   m_ObjectHideFlags: 0

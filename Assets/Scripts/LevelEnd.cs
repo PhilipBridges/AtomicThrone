@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -24,9 +23,11 @@ public class LevelEnd : MonoBehaviour
     public Button perk2button;
     public Button perk3button;
 
-    public static List<String> randPerks = new List<String>();
-    public static List<String> perkPool = Perks.allPerks;
+    public static List<string> randPerks = new List<string>();
+    public static List<string> perkPool = new List<string>();
     public static bool newGame = true;
+
+    private int numPerks = 0;
     public static LevelEnd instance { get; private set; }
     void Awake()
     {
@@ -48,31 +49,81 @@ public class LevelEnd : MonoBehaviour
         perkPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
 
         randPerks.Clear();
-
+        if (LevelManager.stage == 1)
+        {
+            foreach (var perk in Perks.unlockedPerks)
+            {
+                perkPool.Add(perk);
+            }
+        }
         GenPerks();
     }
 
     public void GenPerks()
     {
-        while (randPerks.Count < 4)
+        if (perkPool != null && perkPool.Count > 0)
         {
-            if (perkPool.Count > 0)
+            while (perkPool.Count != randPerks.Count && randPerks.Count < 4)
             {
-                int rand = UnityEngine.Random.Range(0, perkPool.Count - 1);
-                if (!randPerks.Contains(perkPool[rand]))
                 {
-                    randPerks.Add(perkPool[rand]);
+                    int rand = UnityEngine.Random.Range(0, perkPool.Count);
+                    if (!randPerks.Contains(perkPool[rand]))
+                    {
+                        randPerks.Add(perkPool[rand]);
+                        numPerks++;
+                    }
+                }
+            }
+            if (randPerks.Count >= 3)
+            {
+                perk1Text.text = randPerks[0];
+                perk1button.name = randPerks[0];
+
+                perk2Text.text = randPerks[1];
+                perk2button.name = randPerks[1];
+
+                perk3Text.text = randPerks[2];
+                perk3button.name = randPerks[2];
+            }
+            if (randPerks.Count < 3)
+            {
+                if (randPerks.Count == 1)
+                {
+                    perk1Text.text = randPerks[0];
+                    perk1button.name = randPerks[0];
+
+                    perk2Text.text = "None";
+                    perk2button.name = "None";
+
+                    perk3Text.text = "None";
+                    perk3button.name = "None";
+
+                }
+
+                if (randPerks.Count == 2)
+                {
+                    perk1Text.text = randPerks[0];
+                    perk1button.name = randPerks[0];
+
+                    perk2Text.text = randPerks[1];
+                    perk2button.name = randPerks[1];
+
+                    perk3Text.text = "None";
+                    perk3button.name = "None";
                 }
             }
         }
-        perk1Text.text = randPerks[0];
-        perk1button.name = randPerks[0];
+        else
+        {
+            perk1Text.text = "None";
+            perk1button.name = "None";
+            perk2Text.text = "None";
+            perk2button.name = "None";
+            perk3Text.text = "None";
+            perk3button.name = "None";
 
-        perk2Text.text = randPerks[1];
-        perk2button.name = randPerks[1];
-
-        perk3Text.text = randPerks[2];
-        perk3button.name = randPerks[2];
+        }
+        numPerks = 0;
     }
 
     public void OpenCanvas()
@@ -110,7 +161,7 @@ public class LevelEnd : MonoBehaviour
             DudeController.statPoints--;
             var currentAttackSpeed = DudeController.cooldown;
             DudeController.cooldown = currentAttackSpeed - .02f;
-            asText.text = "Atk Speed: " + DudeController.cooldown.ToString();
+            asText.text = "Atk Speed: " + DudeController.cooldown.ToString("0.00");
             statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         }
     }
@@ -133,7 +184,7 @@ public class LevelEnd : MonoBehaviour
         {
             DudeController.statPoints--;
             DudeController.playerSpeed += .1f;
-            msText.text = "Move Speed: " + DudeController.playerSpeed.ToString();
+            msText.text = "Move Speed: " + DudeController.playerSpeed.ToString("0.00");
             statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         }
     }

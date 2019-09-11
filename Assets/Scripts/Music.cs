@@ -29,4 +29,9 @@ public class Music : MonoBehaviour
     {
         _audioSource.Stop();
     }
+
+    public void PlayChing()
+    {
+        _audioSource.Play();
+    }
 }

@@ -21,7 +21,7 @@ public class EnemyController : MonoBehaviour
     float resetTime = 1.0f;
     private float distanceToPlayer;
 
-    private int health = 1;
+    private float health = 5;
     private bool damaged = false;
     //Color lerp stuff 
     Color colorStart = Color.red;
@@ -65,14 +65,14 @@ public class EnemyController : MonoBehaviour
 
         if (health < 5)
         {
-            Move();
+            MoveToPlayer();
         }
-        if (distanceToPlayer < 6f)
+        if (distanceToPlayer < 8.5f)
         {
             if (timer < 0)
             {
                 timer = resetTime;
-                Move();
+                MoveToPlayer();
                 
                 if (horizontal != 0.0f)
                 {
@@ -87,14 +87,19 @@ public class EnemyController : MonoBehaviour
             }
         }
 
-        if (distanceToPlayer > 7f && distanceToPlayer < 9)
+        if (distanceToPlayer > 7f && distanceToPlayer < 11.5)
         {
-            Move();
+            MoveToPlayer();
+        }
+
+        if (LevelManager.remainingEnemies < 4)
+        {
+            MoveToPlayer();
         }
 
     }
 
-    private void Move()
+    private void MoveToPlayer()
     {
         nav.SetDestination(playerLoc);
     }
@@ -109,14 +114,14 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void Damage()
+    public void Damage(float dmgValue)
     {
         if (!damaged)
         {
             damaged = true;
             StartCoroutine("SwitchColor");
         }
-        health -= 1;
+        health -= dmgValue;
     }
 
     IEnumerator SwitchColor()
@@ -142,7 +147,7 @@ public class EnemyController : MonoBehaviour
             LevelManager.remainingEnemies--;
             Debug.Log("REMAINING - " + LevelManager.remainingEnemies);
             if (LevelManager.remainingEnemies <= 0){
-                StartCoroutine(LevelManager.WinCheck());
+               LevelManager.WinCheck();
             }
         }
     }
