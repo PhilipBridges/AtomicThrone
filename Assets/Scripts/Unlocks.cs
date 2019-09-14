@@ -65,13 +65,13 @@ public class Unlocks : MonoBehaviour
 
     public void BuyPerk()
     {
-        if (DudeController.currentMoney > 15)
+        if (DudeController.currentMoney >= 100)
         {
             GameObject.FindGameObjectWithTag("MenuSounds").GetComponent<MenuSounds>().PlayChing();
             string choice = EventSystem.current.currentSelectedGameObject.name;
             Perks.unlockedPerks.Add(choice);
             unlockMoneyText = GameObject.FindWithTag("MoneyText").GetComponent<Text>();
-            DudeController.currentMoney -= 15;
+            DudeController.currentMoney -= 100;
             unlockMoneyText.text = "MONEY: $" + DudeController.currentMoney.ToString();
             MainMenu.perksToDisplay.Remove(choice);
 

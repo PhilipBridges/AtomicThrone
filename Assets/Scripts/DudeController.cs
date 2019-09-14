@@ -78,12 +78,14 @@ public class DudeController : MonoBehaviour
             deathDelay -= Time.deltaTime;
             if (deathDelay <= 0)
             {
-                SceneManager.LoadScene(sceneBuildIndex: 0);
                 currentHealth = 5;
                 Weapons.PistolSwitch();
+                dead = false;
+                SceneManager.LoadScene(sceneBuildIndex: 0);
             }
         }
 
+        GodMode();
         Win();
         MoveUp();
         MoveDown();
@@ -94,15 +96,6 @@ public class DudeController : MonoBehaviour
         Weapons.MagnumSwitch();
         Weapons.LauncherSwitch();
         Stage();
-
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-        Vector2 move = new Vector2(horizontal, vertical);
-
-        float mouseX = Input.mousePosition.x;
-        float mouseY = Input.mousePosition.y;
-
 
         lookDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         lookDirection.Normalize();
@@ -123,16 +116,6 @@ public class DudeController : MonoBehaviour
         anim.SetFloat("Look X", lookDirection.x);
         anim.SetFloat("Look Y", lookDirection.y);
 
-        if (horizontal < 0.0f)
-        {
-            anim.SetTrigger("RunLeft");
-        }
-
-        if (vertical < 0.0f)
-        {
-            anim.SetTrigger("RunRight");
-        }
-
         if (isInvincible)
         {
             invincibleTimer -= Time.deltaTime;
@@ -152,6 +135,10 @@ public class DudeController : MonoBehaviour
     IEnumerator YouDied()
     {
         yield return new WaitForSeconds(2.5f);
+        currentXp = 0;
+        totalXp = 0;
+        currentHealth = 5;
+        PlayerUI.instance.SetValue(0);
         SceneManager.LoadScene(sceneBuildIndex: 0);
     }
 
@@ -369,6 +356,15 @@ public class DudeController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             LevelManager.WinCheck();
+        }
+    }
+
+    void GodMode()
+    {
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            isInvincible = true;
+            invincibleTimer = 100f;
         }
     }
 }

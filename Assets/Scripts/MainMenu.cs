@@ -12,6 +12,7 @@ public class MainMenu : MonoBehaviour
     public static List<string> perksToDisplay = new List<string>();
     private void Start()
     {
+        perksToDisplay.Clear();
         foreach (var perk in Perks.allPerks)
         {
             perksToDisplay.Add(perk);
@@ -46,13 +47,17 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator LoadGame()
     {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(sceneBuildIndex: 1);
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("PGScene");
 
         while (!asyncOperation.isDone)
         {
+            if (asyncOperation.progress >= 0.9f)
+            {
+                asyncOperation.allowSceneActivation = true;
+            }
+
             yield return null;
         }
-        asyncOperation.allowSceneActivation = true;
     }
 
     public void QuitGame()

@@ -46,41 +46,6 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        float dmgValue = 0;
-
-        if (Weapons.hasLauncher)
-        {
-            dmgValue = 5;
-        }
-        if (Weapons.hasMagnum)
-        {
-            dmgValue = 5;
-        }
-
-        if (Weapons.hasPistol)
-        {
-            dmgValue = 1;
-        }
-
-        if (Weapons.hasShotgun)
-        {
-            dmgValue = 1.5f;
-        }
-
-        EnemyController e = other.collider.GetComponent<EnemyController>();
-
-        if (e != null)
-        {
-            if (Perks.lifesteal)
-            {
-                DudeController.currentHealth += .1f * dmgValue;
-                DudeController.currentHealth = Mathf.Clamp(DudeController.currentHealth, 0, DudeController.maxHealth);
-                UIHealthbar.instance.SetValue(DudeController.currentHealth / (float)DudeController.maxHealth);
-            }
-
-            e.Damage(dmgValue);
-        }
-
         Destroy(gameObject);
     }
 }
