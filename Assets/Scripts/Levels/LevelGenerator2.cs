@@ -16,6 +16,7 @@ public class LevelGenerator2 : MonoBehaviour
         public Vector2 dir;
         public Vector2 pos;
     }
+    // TILE STUFF
     public Tilemap wall2Map;
     public Tilemap floorMap;
     public Tilemap wallMap;
@@ -25,15 +26,15 @@ public class LevelGenerator2 : MonoBehaviour
     public GameObject tree2;
     public TileBase wall2Tile;
     public TileBase wallTile;
-
+    // ----------------------
     List<walker> walkers;
     float chanceWalkerChangeDir = 0.5f, chanceWalkerSpawn = 0.05f;
     float changeWalkerDestroy = 0.05f;
     int maxWalkers = 10;
     float percentToFill = 0.5f;
     public GameObject waterObj, floorObj, wallObj;
-    //for robot generation
-    public GameObject robot;
+    //for bat generation
+    public GameObject bat;
     public GameObject boss;
     [Range(1, 25)]
     public int spawnChance = 5;
@@ -361,13 +362,13 @@ public class LevelGenerator2 : MonoBehaviour
 
         float rand = Random.Range(1, 100);
         float distance = Vector3.Distance(new Vector3(x, y), new Vector3(player.transform.position.x, player.transform.position.y));
-        if (distance > 60f)
+        if (distance > 50f)
         {
-            // Spawn robot chance
+            // Spawn bat chance
             if (enemiesToSpawn > 0 && rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
             {
                 Vector3 spawnVec = Vector3Int.FloorToInt(spawnPos);
-                Instantiate(robot, spawnVec, Quaternion.identity);
+                Instantiate(bat, spawnVec, Quaternion.identity);
                 enemiesToSpawn--;
                 enemiesLeft++;
             }

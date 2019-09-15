@@ -49,6 +49,7 @@ public class LevelEnd : MonoBehaviour
         perkPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
 
         randPerks.Clear();
+        perkPool.Clear();
         if (LevelManager.stage == 1)
         {
             foreach (var perk in Perks.unlockedPerks)

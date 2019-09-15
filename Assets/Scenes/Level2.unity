@@ -1557,8 +1557,8 @@ MonoBehaviour:
   wallMap: {fileID: 1048604099}
   floorTile: {fileID: 11400000, guid: 5955b584dd489b742b60680a7c1f550e, type: 2}
   floorTile2: {fileID: 11400000, guid: 7a94d126d0599d84a8c4bb39d5465a14, type: 2}
-  tree: {fileID: 2289394158490492367, guid: 4d9e65a8548cda44dac730787f677c3f, type: 3}
-  tree2: {fileID: 720990573311941374, guid: 9cb961ba0b081ad42b5b87de7de6a559, type: 3}
+  tree: {fileID: 720990573311941374, guid: 9cb961ba0b081ad42b5b87de7de6a559, type: 3}
+  tree2: {fileID: 878875170523831560, guid: 902ef3aef71edb846b1141305bdbbb23, type: 3}
   wall2Tile: {fileID: 11400000, guid: 6c493d611694f3442b695e541713d6ea, type: 2}
   wallTile: {fileID: 11400000, guid: 30497930c344e354ba7d17732cba090a, type: 2}
   waterObj: {fileID: 7544762199594709445, guid: c2ac9aa7bc2e11d43843de61a73e4484,
@@ -1566,7 +1566,7 @@ MonoBehaviour:
   floorObj: {fileID: 4329022887390646274, guid: 4c866a9b2b1e9c7448b50fa4c1ac3510,
     type: 3}
   wallObj: {fileID: 3755876043150553002, guid: bb3541c425718be49a6d90bbef4883fb, type: 3}
-  robot: {fileID: 5948190811058006844, guid: 08563ddd8ed5b4f43a829253f9c3d26e, type: 3}
+  bat: {fileID: 4002413439920733605, guid: d7e86ab11e71e2a4fbd551c1f65b4e61, type: 3}
   boss: {fileID: 7473355027924510896, guid: a6d9ed8705e67ad4c93020c5d3aae621, type: 3}
   spawnChance: 5
   player: {fileID: 296890718385368640, guid: a033e12918146964c96596052ae48be1, type: 3}

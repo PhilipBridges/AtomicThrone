@@ -5,19 +5,32 @@ using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
+    AsyncOperation asyncOperation;
     public static int stage = 1;
     public static int difficulty;
     public static int remainingEnemies = 0;
     public static bool done = false;
     void Start()
     {
+
     }
 
     void Update()
     {
         if (done)
         {
-            NextLevel();
+            done = false;
+            if (stage < 5)
+            {
+                asyncOperation = SceneManager.LoadSceneAsync("Level1");
+            }
+            else
+            {
+                asyncOperation = SceneManager.LoadSceneAsync("Level2");
+            }
+
+            asyncOperation.allowSceneActivation = false;
+            StartCoroutine(NextLevel());
         }
     }
 
@@ -43,12 +56,21 @@ public class LevelManager : MonoBehaviour
         LevelEnd.instance.OpenCanvas();
     }
 
-    void NextLevel()
+    IEnumerator NextLevel()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        yield return null;
+
+        while (!asyncOperation.isDone)
         {
-            done = false;
-            SceneManager.LoadScene(sceneBuildIndex: 1);
+            if (asyncOperation.progress >= 0.9f)
+            {
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    asyncOperation.allowSceneActivation = true;
+                }
+            }
+
+            yield return null;
         }
     }
 }

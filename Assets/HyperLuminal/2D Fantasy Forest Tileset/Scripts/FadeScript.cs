@@ -94,10 +94,11 @@ public class FadeScript : MonoBehaviour
 		FadeType = FADETYPE.RESPAWN;
 	}
 
-	/// <summary>
-	/// Changes the level to the next level in the list
-	/// </summary>
-	private void ChangeLevel()
+    /// <summary>
+    /// Changes the level to the next level in the list
+    /// </summary>
+    [System.Obsolete]
+    private void ChangeLevel()
 	{
 		int levelID = Application.loadedLevel + 1;
 		if(levelID > Application.levelCount - 1){ levelID = 0; }

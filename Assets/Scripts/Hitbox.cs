@@ -6,6 +6,7 @@ public class Hitbox : MonoBehaviour
 {
     RobotController robot;
     BossController boss;
+    BatController bat;
     void Start()
     {
     }
@@ -43,6 +44,7 @@ public class Hitbox : MonoBehaviour
         {
             robot = GetComponentInParent<RobotController>();
             boss = GetComponentInParent<BossController>();
+            bat = GetComponentInParent<BatController>();
 
             // Robot Damage
             if (robot != null && !robot.dead)
@@ -62,8 +64,6 @@ public class Hitbox : MonoBehaviour
                 robot.Damage(dmgValue);
             }
 
-            
-
             // Boss Damage
             if (boss != null)
             {
@@ -81,6 +81,26 @@ public class Hitbox : MonoBehaviour
                 } 
 
                 boss.Damage(dmgValue);
+
+            }
+            
+            // Bat Damage
+            if (bat != null)
+            {
+                if (Perks.lifesteal)
+                {
+                    DudeController.currentHealth += .1f * dmgValue;
+                    DudeController.currentHealth = Mathf.Clamp(DudeController.currentHealth, 0, DudeController.maxHealth);
+                    UIHealthbar.instance.SetValue(DudeController.currentHealth / (float)DudeController.maxHealth);
+                }
+
+                if (bat.dead)
+                {
+                    GetComponent<BoxCollider2D>().enabled = false;
+                    return;
+                } 
+
+                bat.Damage(dmgValue);
 
             }
         }

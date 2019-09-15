@@ -102,10 +102,6 @@ public class BossController : MonoBehaviour
         nav.SetDestination(playerLoc);
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-    }
-
     public void Damage(float dmgValue)
     {
         if (!damaged)

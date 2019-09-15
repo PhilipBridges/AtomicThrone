@@ -3,7 +3,8 @@ using System.Collections;
 
 public class MenuButtons : MonoBehaviour 
 {
-	void OnGUI()
+    [System.Obsolete]
+    void OnGUI()
 	{
 		GUI.backgroundColor = Color.green;
 		GUIStyle style = new GUIStyle();

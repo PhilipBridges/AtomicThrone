@@ -42,12 +42,17 @@ public class MainMenu : MonoBehaviour
     }
     public void PlayGame()
     {
+        this.gameObject.GetComponentInParent<Canvas>().enabled = false;
         StartCoroutine(LoadGame());
     }
 
     IEnumerator LoadGame()
     {
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("PGScene");
+        yield return null;
+
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync("Level1");
+
+        asyncOperation.allowSceneActivation = false;
 
         while (!asyncOperation.isDone)
         {
