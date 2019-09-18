@@ -42,14 +42,13 @@ public class LevelEnd : MonoBehaviour
             levelEndCanvas.enabled = false;
         }
 
-        asText.text = "Atk Speed: " + DudeController.cooldown.ToString();
-        healthText.text = "Max Health: " + DudeController.maxHealth.ToString();
-        msText.text = "Move Speed: " + DudeController.playerSpeed.ToString();
+        asText.text = "Atk Speed: " + DudeController.cooldown.ToString("0.00");
+        healthText.text = "Max Health: " + DudeController.maxHealth.ToString("0.00");
+        msText.text = "Move Speed: " + DudeController.playerSpeed.ToString("0.00");
         statPointText.text = "Stat Points: " + DudeController.statPoints.ToString();
         perkPointText.text = "Perk Points: " + DudeController.perkPoints.ToString();
 
         randPerks.Clear();
-        perkPool.Clear();
         if (LevelManager.stage == 1)
         {
             foreach (var perk in Perks.unlockedPerks)

@@ -6,13 +6,13 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     AsyncOperation asyncOperation;
+    public static GameObject loadingScreen;
     public static int stage = 1;
     public static int difficulty;
     public static int remainingEnemies = 0;
     public static bool done = false;
     void Start()
     {
-
     }
 
     void Update()
@@ -34,8 +34,21 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public static IEnumerator StartLoad()
+    {
+        yield return null;
+
+        loadingScreen = GameObject.FindGameObjectWithTag("Loading");
+        loadingScreen.GetComponent<Canvas>().enabled = true;
+
+        yield return new WaitForSeconds(.3f);
+        loadingScreen.GetComponent<Canvas>().enabled = false;
+
+    }
+
     private void Awake()
     {
+        
         int numManagers = FindObjectsOfType<LevelManager>().Length;
         if (numManagers > 1)
         {
@@ -66,6 +79,9 @@ public class LevelManager : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    loadingScreen = GameObject.FindGameObjectWithTag("Loading");
+                    loadingScreen.GetComponent<Canvas>().enabled = true;
+
                     asyncOperation.allowSceneActivation = true;
                 }
             }

@@ -53,13 +53,14 @@ public class LevelGenerator : MonoBehaviour {
 		RemoveSingleWalls();
 		TwoGap();
 		SpawnLevel();
-		Nav.LoadNav();
+        Nav.instance.LoadNav();
 		SpawnpointSearch();
 		SpawnEnemies();
     }
 	void Setup(){
-		//find grid size
-		roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
+        StartCoroutine(LevelManager.StartLoad());
+        //find grid size
+        roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
 		roomWidth = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
 		//create grid
 		grid = new gridSpace[roomWidth,roomHeight];

@@ -8,8 +8,5 @@ public class Restarter : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.R)){
 			SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 		}
-		//if (Input.GetKeyDown("escape")){
-		//	Application.Quit();
-		//}
 	}
 }

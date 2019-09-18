@@ -26,13 +26,17 @@ public class Projectile : MonoBehaviour
 
         if (Weapons.hasShotgun)
         {
-            StartCoroutine(KillTime(gameObject));
+            StartCoroutine(KillTime(gameObject, .3f));
+        }
+        if (Weapons.hasBouncer)
+        {
+            StartCoroutine(KillTime(gameObject, 3.5f));
         }
     }
 
-    IEnumerator KillTime(GameObject gameobject)
+    IEnumerator KillTime(GameObject gameobject, float time)
     {
-        yield return new WaitForSeconds(.2f);
+        yield return new WaitForSeconds(time);
         Destroy(gameObject);
     }
     public void Launch(float force)
@@ -46,6 +50,9 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        Destroy(gameObject);
+        if (!Weapons.hasBouncer)
+        {
+            Destroy(gameObject);
+        }
     }
 }

@@ -11,7 +11,7 @@ public class RobotController : MonoBehaviour
     public Vector2 playerLoc;
     private NavMeshAgent nav;
     private GameObject player;
-
+    public Drops drops;
     private Renderer rend;
     private new AudioSource audio;
     new Rigidbody2D rigidbody2D;
@@ -27,8 +27,14 @@ public class RobotController : MonoBehaviour
     Color colorStart = Color.red;
     Color colorEnd = Color.white;
     //---
+
+    bool dropShotgun = false;
+    bool dropMagnum = false;
+    bool dropBouncer = false;
+    bool dropLauncher = false;
     void Start()
     {
+        drops = GetComponent<Drops>();
         nav = GetComponent<NavMeshAgent>();
         audio = GetComponent<AudioSource>();
         rigidbody2D = GetComponent<Rigidbody2D>();
@@ -41,6 +47,32 @@ public class RobotController : MonoBehaviour
         timer = 1.0f;
         smokeEffect.Stop();
         rigidbody2D.transform.rotation = new Quaternion(0,0,0,0);
+
+    }
+
+    private void Awake()
+    {
+        float roll = GetComponent<Drops>().DropRoll();
+        if (roll < 50)
+        {
+            dropShotgun = true;
+            return;
+        }
+        if (roll > 50 && roll < 75)
+        {
+            dropBouncer = true;
+            return;
+        }
+        if (roll > 75 && roll < 90)
+        {
+            dropMagnum = true;
+            return;
+        }
+        if (roll > 90 && roll < 100)
+        {
+            dropLauncher = true;
+            return;
+        }
     }
 
     void Update()
@@ -99,6 +131,11 @@ public class RobotController : MonoBehaviour
 
     }
 
+    float CurveWeightedRandom(AnimationCurve curve)
+    {
+        return curve.Evaluate(Random.value) * 100;
+    }
+
     private void MoveToPlayer()
     {
         nav.SetDestination(playerLoc);
@@ -142,12 +179,28 @@ public class RobotController : MonoBehaviour
         audio.Stop();
         smokeEffect.Play();
 
+        if (dropShotgun)
+        {
+            drops.DropShotgunAmmo(this.gameObject.transform.position);
+        }
+        if (dropMagnum)
+        {
+            drops.DropMagnumAmmo(this.gameObject.transform.position);
+        }
+        if (dropBouncer)
+        {
+            drops.DropBouncerAmmo(this.gameObject.transform.position);
+        }
+        if (dropLauncher)
+        {
+            drops.DropLauncherAmmo(this.gameObject.transform.position);
+        }
+
         DudeController playerController = player.gameObject.GetComponent<DudeController>();
 
         playerController.ChangeMoney(1);
         playerController.ChangeXp(11);
         LevelManager.remainingEnemies--;
-        Debug.Log("REMAINING - " + LevelManager.remainingEnemies);
         if (LevelManager.remainingEnemies <= 0){
             LevelManager.WinCheck();
         }

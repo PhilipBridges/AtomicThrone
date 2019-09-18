@@ -61,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -98,6 +99,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectilePrefab: {fileID: 3054375329628863494, guid: f64e2a94df71142408da3c76669098cb,
     type: 3}
+  bouncerPrefab: {fileID: 411282117836868143, guid: dc6c297299a7aeb4a9bd2d98c6df55fe,
+    type: 3}
   throwSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
   shoot: {fileID: 8300000, guid: 9afd6cc7134a3428cb7606e918101f8f, type: 3}
   hitSound: {fileID: 0}
@@ -120,7 +123,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!82 &2934884866175212180
 AudioSource:

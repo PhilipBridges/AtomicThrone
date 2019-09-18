@@ -10,6 +10,12 @@ public class PlayerUI : MonoBehaviour
     public Text xp;
     public Slider xpBar;
 
+    public Image shotgunImage;
+    public Image magnumImage;
+    public Image bouncerImage;
+    public Image launcherImage;
+    public Image pistolImage;
+
     public static PlayerUI instance { get; private set; }
     void Awake()
     {
@@ -23,6 +29,7 @@ public class PlayerUI : MonoBehaviour
         xp.text = DudeController.currentXp.ToString() + " / " + (int)DudeController.requiredXp + "  XP";
         xpBar.value = DudeController.currentXp;
         xpBar.maxValue = DudeController.requiredXp;
+
     }
 
     // Update is called once per frame

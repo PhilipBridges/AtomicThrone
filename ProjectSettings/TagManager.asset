@@ -16,6 +16,12 @@ TagManager:
   - Robot
   - Boss
   - PlayerProjectile
+  - Loading
+  - Shotgun
+  - Magnum
+  - Launcher
+  - Bouncer
+  - BouncerBullet
   layers:
   - Default
   - TransparentFX
@@ -35,7 +41,7 @@ TagManager:
   - Hitbox
   - Ignored
   - Terrain
-  - 
+  - Bouncer
   - 
   - 
   - 

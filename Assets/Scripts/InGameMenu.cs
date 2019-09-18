@@ -24,6 +24,13 @@ public class InGameMenu : MonoBehaviour
 
     void Update()
     {
+        if (menuCanvas.enabled)
+        {
+            Time.timeScale = 0.1f;
+        } else
+        {
+            Time.timeScale = 1;
+        }
         if (Input.GetKeyDown(KeyCode.Escape) && !closeable)
         {
             StartCoroutine(OpenMenu());
@@ -37,8 +44,6 @@ public class InGameMenu : MonoBehaviour
 
     IEnumerator OpenMenu()
     {
-        //menu = menuCanvas.gameObject;
-        //menu.GetComponentInChildren<Canvas>().enabled = true;
         menuCanvas.enabled = true;
         DudeController.canShoot = false;
         yield return new WaitForSeconds(.3f);
@@ -47,8 +52,6 @@ public class InGameMenu : MonoBehaviour
 
     IEnumerator CloseMenu()
     {
-        //menu = menuCanvas.gameObject;
-        //menu.GetComponentInChildren<Canvas>().enabled = false;
         menuCanvas.enabled = false;
         DudeController.canShoot = true;
         yield return new WaitForSeconds(.3f);

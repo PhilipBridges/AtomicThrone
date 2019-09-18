@@ -24,6 +24,7 @@ public class Hitbox : MonoBehaviour
         {
             dmgValue = 5;
         }
+
         if (Weapons.hasMagnum)
         {
             dmgValue = 5;
@@ -36,11 +37,16 @@ public class Hitbox : MonoBehaviour
 
         if (Weapons.hasShotgun)
         {
-            dmgValue = 1.5f;
+            dmgValue = 1.8f;
+        }
+
+        if (Weapons.hasBouncer)
+        {
+            dmgValue = 2f;
         }
 
         
-        if (other.gameObject.CompareTag("PlayerProjectile"))
+        if (other.gameObject.CompareTag("PlayerProjectile") || other.gameObject.CompareTag("BouncerBullet"))
         {
             robot = GetComponentInParent<RobotController>();
             boss = GetComponentInParent<BossController>();

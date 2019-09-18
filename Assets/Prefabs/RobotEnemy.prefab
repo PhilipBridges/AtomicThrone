@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4351951957838950978}
   - component: {fileID: 5580295925143183373}
   - component: {fileID: 7087002404704427712}
+  - component: {fileID: 4183962775887217061}
   - component: {fileID: 5135910977535214862}
   - component: {fileID: 1037437019}
   - component: {fileID: 647138441095120355}
@@ -105,7 +106,50 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7433792909879128650, guid: af3f17f4f06a42d4cb6363363e06cdd4,
     type: 3}
   playerLoc: {x: 0, y: 0}
+  drops: {fileID: 0}
   dead: 0
+--- !u!114 &4183962775887217061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5948190811058006844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 142c5f9b6ed8ce94291ba66d16f0e16d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dropVal: 0
+  shotgun: {fileID: 1892977494140835069, guid: 3689dcb0a45530f4caa8d89d3d69166b, type: 3}
+  magnum: {fileID: 3889596777832840476, guid: 6deeef53ec77d674f88f88b7753acccd, type: 3}
+  launcher: {fileID: 3945787102177787359, guid: f8b316903a3ee4c4fb8be8ad886152da,
+    type: 3}
+  bouncer: {fileID: 4572241125473682617, guid: 7c6f339757c9c4d409499b5d0ff26598, type: 3}
 --- !u!61 &5135910977535214862
 BoxCollider2D:
   m_ObjectHideFlags: 0

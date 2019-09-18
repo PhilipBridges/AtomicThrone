@@ -12,6 +12,7 @@ public class DudeController : MonoBehaviour
 
     //public GameObject menu;
     public GameObject projectilePrefab;
+    public GameObject bouncerPrefab;
 
     private AudioSource audioSource;
     public AudioClip throwSound;
@@ -20,6 +21,7 @@ public class DudeController : MonoBehaviour
 
     Vector2 movementDirection;
     Vector2 lookDirection = new Vector2(1, 0);
+    public static Vector2 location;
 
     //Player things ---------------------------
     public static float maxHealth = 5;
@@ -59,6 +61,7 @@ public class DudeController : MonoBehaviour
             currentHealth = maxHealth;
         }
         UIHealthbar.instance.SetValue(currentHealth / (float)maxHealth);
+        Weapons.Default();
     }
 
     public void PlaySound(AudioClip clip)
@@ -71,6 +74,21 @@ public class DudeController : MonoBehaviour
 
     void Update()
     {
+        
+        MoveUp();
+        MoveDown();
+        MoveLeft();
+        MoveRight();
+        Weapons.PistolSwitch();
+        Weapons.ShotgunSwitch();
+        Weapons.MagnumSwitch();
+        Weapons.BouncerSwitch();
+        Weapons.LauncherSwitch();
+        Stage();
+        GodMode();
+        Win();
+        Weapons.AllWeapons();
+
         if (currentHealth <= 0)
         {
             anim.SetTrigger("Death");
@@ -85,17 +103,7 @@ public class DudeController : MonoBehaviour
             }
         }
 
-        GodMode();
-        Win();
-        MoveUp();
-        MoveDown();
-        MoveLeft();
-        MoveRight();
-        Weapons.PistolSwitch();
-        Weapons.ShotgunSwitch();
-        Weapons.MagnumSwitch();
-        Weapons.LauncherSwitch();
-        Stage();
+        location = this.gameObject.transform.position;
 
         lookDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         lookDirection.Normalize();
@@ -128,6 +136,37 @@ public class DudeController : MonoBehaviour
             if (!dead && canShoot)
             {
                 StartCoroutine(Launch());
+            }
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other != null)
+        {
+            switch (other.gameObject.tag)
+            {
+                case "Shotgun":
+                    Weapons.shotgunAmmo += 6;
+                    Weapons.pickedUpShotgun = true;
+                    Debug.Log(Weapons.shotgunAmmo);
+                    break;
+                case "Bouncer":
+                    Weapons.bouncerAmmo += 6;
+                    Weapons.pickedUpBouncer = true;
+                    Debug.Log(Weapons.bouncerAmmo);
+                    break;
+                case "Magnum":
+                    Weapons.magnumAmmo += 4;
+                    Weapons.pickedUpMagnum = true;
+                    Debug.Log(Weapons.magnumAmmo);
+                    break;
+                case "Launcher":
+                    Weapons.LauncherAmmo += 2;
+                    Weapons.pickedUpLauncher = true;
+                    Debug.Log(Weapons.LauncherAmmo);
+                    break;
+                default:
+                    break;
             }
         }
     }
@@ -217,7 +256,7 @@ public class DudeController : MonoBehaviour
             PlaySound(throwSound);
         }
 
-        if (Weapons.hasMagnum)
+        if (Weapons.hasMagnum && Weapons.magnumAmmo > 0)
         {
             GameObject projectileObject = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
 
@@ -226,9 +265,11 @@ public class DudeController : MonoBehaviour
             projectile.Launch(800);
             PlaySound(shoot);
             PlaySound(throwSound);
+
+            Weapons.magnumAmmo--;
         }
 
-        if (Weapons.hasShotgun)
+        if (Weapons.hasShotgun && Weapons.shotgunAmmo > 0)
         {
             GameObject shotgunShell1 = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.3f, Quaternion.identity);
             GameObject shotgunShell2 = Instantiate(projectilePrefab, rigidbody.position + Vector2.left * 0.4f + lookDirection * 0.4f, Quaternion.identity);
@@ -243,8 +284,21 @@ public class DudeController : MonoBehaviour
             projectile3.Launch(700);
             PlaySound(shoot);
             PlaySound(throwSound);
+
+            Weapons.shotgunAmmo--;
         }
-        
+
+        if (Weapons.hasBouncer)
+        {
+            GameObject projectileObject = Instantiate(bouncerPrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
+
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+
+            projectile.Launch(900);
+            PlaySound(shoot);
+            PlaySound(throwSound);
+        }
+
         yield return new WaitForSeconds(cooldown + weaponTime);
         canShoot = true;
     }

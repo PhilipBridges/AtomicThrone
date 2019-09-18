@@ -59,12 +59,17 @@ public class LevelGenerator2 : MonoBehaviour
         RemoveSingleWalls();
         TwoGap();
         SpawnLevel();
-        Nav.LoadNav();
+        Nav.instance.LoadNav();
         SpawnpointSearch();
         SpawnEnemies();
+        if (LevelManager.stage < 5)
+        {
+            LevelManager.stage = 5;
+        }
     }
     void Setup()
     {
+        StartCoroutine(LevelManager.StartLoad());
         //find grid size
         roomHeight = Mathf.RoundToInt(roomSizeWorldUnits.x / worldUnitsInOneGridCell);
         roomWidth = Mathf.RoundToInt(roomSizeWorldUnits.y / worldUnitsInOneGridCell);
@@ -433,17 +438,19 @@ public class LevelGenerator2 : MonoBehaviour
                 floorMap.SetTile(spawnPos, floorTile);
             }
         }
-
         if (toSpawn == waterObj)
         {
             Instantiate(tree, spawnPos, Quaternion.identity);
-            wallMap.SetTile(spawnPos, floorTile);
+            // Offset X by 2 because the navmesh gets confused by sprite shadows
+            wallMap.SetTile(new Vector3Int(spawnPos.x - 2, spawnPos.y, 0), floorTile);
+            floorMap.SetTile(spawnPos, floorTile);
         }
 
         if (toSpawn == wallObj)
         {
             Instantiate(tree2, spawnPos, Quaternion.identity);
-            wallMap.SetTile(spawnPos, floorTile);
+            wallMap.SetTile(new Vector3Int(spawnPos.x - 2, spawnPos.y, 0), floorTile);
+            floorMap.SetTile(spawnPos, floorTile);
         }
     }
 }

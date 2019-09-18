@@ -34,9 +34,10 @@ public class FadeScript : MonoBehaviour
 		FadeType = FADETYPE.IN;
 		AlphaValue = 1.0f;
 	}
-	
-	// Update is called once per frame
-	void Update () 
+
+    // Update is called once per frame
+    [System.Obsolete]
+    void Update () 
 	{
 		// fade in or fade out based on the objects state
 		if(FadeType == FADETYPE.IN)

@@ -3,39 +3,41 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class BossController : MonoBehaviour
+public class BatController : MonoBehaviour
 {
     Vector2 playerLoc;
     private NavMeshAgent nav;
     private GameObject player;
-    public Drops drops;
+
     private Renderer rend;
     private new AudioSource audio;
     new Rigidbody2D rigidbody2D;
     Animator animator;
+    public Drops drops;
     float timer;
     float resetTime = .5f;
     private float distanceToPlayer;
     Vector2 lookDirection = new Vector2(1, 0);
 
-    private float health = 15;
+    private float health = 3;
     private bool damaged = false;
     public bool dead = false;
     //Color lerp stuff 
     Color colorStart = Color.red;
     Color colorEnd = Color.white;
     //---
+
     bool dropShotgun = false;
     bool dropMagnum = false;
     bool dropBouncer = false;
     bool dropLauncher = false;
     void Start()
     {
-        drops = GetComponent<Drops>();
         nav = GetComponent<NavMeshAgent>();
         audio = GetComponent<AudioSource>();
         rigidbody2D = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
+        drops = GetComponent<Drops>();
         rend = GetComponent<SpriteRenderer>();
         nav.updateRotation = false;
         nav.updateUpAxis = false;
@@ -91,10 +93,12 @@ public class BossController : MonoBehaviour
 
         playerLoc = player.transform.position;
         distanceToPlayer = Vector2.Distance(transform.position, playerLoc);
-        if (health < 5)
+
+        if (health < 3)
         {
             MoveToPlayer();
         }
+
         if (distanceToPlayer < 4f)
         {
             if (timer < 0)
@@ -104,10 +108,11 @@ public class BossController : MonoBehaviour
 
                 animator.SetFloat("Move X", lookDirection.x);
                 animator.SetFloat("Move Y", lookDirection.y);
+                nav.speed = 3;
                 Attack();
             }
         }
-        if (distanceToPlayer > 3.5f && distanceToPlayer < 11.5)
+        if (distanceToPlayer > 4 && distanceToPlayer < 11.5)
         {
             animator.SetBool("AttackLeft", false);
             animator.SetBool("AttackRight", false);
@@ -125,7 +130,6 @@ public class BossController : MonoBehaviour
         {
             MoveToPlayer();
         }
-
     }
 
     float CurveWeightedRandom(AnimationCurve curve)
@@ -158,15 +162,13 @@ public class BossController : MonoBehaviour
 
     private void Kill()
     {
-        nav.speed = 0;
         dead = true;
-        this.GetComponentInChildren<Hitbox>().gameObject.layer = 16;
         animator.SetTrigger("Dead");
+        nav.speed = 0;
+        nav.enabled = false;
+        this.GetComponentInChildren<Hitbox>().gameObject.layer = 16;
         rigidbody2D.bodyType = RigidbodyType2D.Static;
         DudeController playerController = player.gameObject.GetComponent<DudeController>();
-        playerController.ChangeMoney(1);
-        playerController.ChangeXp(11);
-        LevelManager.remainingEnemies--;
 
         if (dropShotgun)
         {
@@ -185,6 +187,9 @@ public class BossController : MonoBehaviour
             drops.DropLauncherAmmo(this.gameObject.transform.position);
         }
 
+        playerController.ChangeMoney(1);
+        playerController.ChangeXp(11);
+        LevelManager.remainingEnemies--;
         if (LevelManager.remainingEnemies <= 0)
         {
             LevelManager.WinCheck();
@@ -193,7 +198,7 @@ public class BossController : MonoBehaviour
 
     void Attack()
     {
-        if (distanceToPlayer < 4.5f)
+        if (distanceToPlayer < 3f)
         {
             if (lookDirection.x < -.4f/* && lookDirection.y < .4f*/)
             {
@@ -224,10 +229,9 @@ public class BossController : MonoBehaviour
     // Called from Boss animations
     void DamagePlayer()
     {
-        Debug.Log(distanceToPlayer);
-        if (distanceToPlayer < 3.4)
+        if (distanceToPlayer < 3)
         {
-            player.gameObject.GetComponent<DudeController>().ChangeHealth(-2);
+            player.gameObject.GetComponent<DudeController>().ChangeHealth(-1);
         }
     }
 

@@ -7,10 +7,16 @@ using UnityEngine.SceneManagement;
 public class Nav : MonoBehaviour
 {
     static NavMeshSurface2d nav;
+    public static Nav instance { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
-       nav = GetComponent<NavMeshSurface2d>();
+        nav = GetComponent<NavMeshSurface2d>();
+    }
+
+    private void Awake()
+    {
+        instance = this;
     }
 
     public static IEnumerator Generate()
@@ -19,9 +25,9 @@ public class Nav : MonoBehaviour
         yield return new WaitForSeconds(.3f);
     }
 
-    public static void LoadNav()
+    public void LoadNav()
     {
+        nav = GetComponent<NavMeshSurface2d>();
         nav.BuildNavMesh();
     }
-
 }
