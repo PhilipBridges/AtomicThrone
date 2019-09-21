@@ -28,9 +28,10 @@ public class LevelGenerator : MonoBehaviour {
 	int maxWalkers = 10;
 	float percentToFill = 0.5f; 
 	public GameObject waterObj, floorObj, wallObj;
-	//for robot generation
+	//for enemy generation
 	public GameObject robot;
     public GameObject boss;
+    public GameObject ghost;
 	[Range(1, 25)]
 	public int spawnChance = 5;
 	Task task;
@@ -326,7 +327,7 @@ public class LevelGenerator : MonoBehaviour {
             if (enemiesToSpawn > 0 && rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
             {
                 Vector3 spawnVec = Vector3Int.FloorToInt(spawnPos);
-                Instantiate(robot, spawnVec, Quaternion.identity);
+                Instantiate(ghost, spawnVec, Quaternion.identity);
                 enemiesToSpawn--;
                 enemiesLeft++;
             }

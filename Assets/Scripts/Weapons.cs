@@ -17,7 +17,7 @@ public class Weapons : MonoBehaviour
 
     public static int shotgunAmmo = 0;
     public static int magnumAmmo = 0;
-    public static int LauncherAmmo = 0;
+    public static int launcherAmmo = 0;
     public static int bouncerAmmo = 0;
 
     public static void PistolSwitch()
@@ -36,6 +36,8 @@ public class Weapons : MonoBehaviour
             PlayerUI.instance.launcherImage.gameObject.SetActive(false);
             PlayerUI.instance.shotgunImage.gameObject.SetActive(false);
             PlayerUI.instance.bouncerImage.gameObject.SetActive(false);
+
+            PlayerUI.instance.ammo.text = "x " + "\u221E";
         }
     }
     public static void ShotgunSwitch()
@@ -54,6 +56,8 @@ public class Weapons : MonoBehaviour
             PlayerUI.instance.launcherImage.gameObject.SetActive(false);
             PlayerUI.instance.shotgunImage.gameObject.SetActive(true);
             PlayerUI.instance.bouncerImage.gameObject.SetActive(false);
+
+            PlayerUI.instance.SetAmmo(shotgunAmmo);
         }
     }
 
@@ -73,6 +77,8 @@ public class Weapons : MonoBehaviour
             PlayerUI.instance.launcherImage.gameObject.SetActive(false);
             PlayerUI.instance.shotgunImage.gameObject.SetActive(false);
             PlayerUI.instance.bouncerImage.gameObject.SetActive(false);
+
+            PlayerUI.instance.SetAmmo(magnumAmmo);
         }
     }
 
@@ -92,6 +98,8 @@ public class Weapons : MonoBehaviour
             PlayerUI.instance.launcherImage.gameObject.SetActive(true);
             PlayerUI.instance.shotgunImage.gameObject.SetActive(false);
             PlayerUI.instance.bouncerImage.gameObject.SetActive(false);
+
+            PlayerUI.instance.SetAmmo(launcherAmmo);
         }
     }
 
@@ -103,7 +111,7 @@ public class Weapons : MonoBehaviour
             hasPistol = false;
             hasShotgun = false;
             hasMagnum = false;
-            hasLauncher = true;
+            hasLauncher = false;
             hasBouncer = true;
 
             PlayerUI.instance.pistolImage.gameObject.SetActive(false);
@@ -111,6 +119,8 @@ public class Weapons : MonoBehaviour
             PlayerUI.instance.launcherImage.gameObject.SetActive(false);
             PlayerUI.instance.shotgunImage.gameObject.SetActive(false);
             PlayerUI.instance.bouncerImage.gameObject.SetActive(true);
+
+            PlayerUI.instance.SetAmmo(bouncerAmmo);
         }
     }
 
@@ -128,6 +138,8 @@ public class Weapons : MonoBehaviour
         PlayerUI.instance.launcherImage.gameObject.SetActive(false);
         PlayerUI.instance.shotgunImage.gameObject.SetActive(false);
         PlayerUI.instance.bouncerImage.gameObject.SetActive(false);
+
+        PlayerUI.instance.ammo.text = "x " + "\u221E";
     }
 
     public static void AllWeapons()
@@ -141,7 +153,7 @@ public class Weapons : MonoBehaviour
 
             shotgunAmmo = 999;
             magnumAmmo = 999;
-            LauncherAmmo = 999;
+            launcherAmmo = 999;
             bouncerAmmo = 999;
         }
     }

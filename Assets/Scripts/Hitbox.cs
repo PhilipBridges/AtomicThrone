@@ -7,6 +7,7 @@ public class Hitbox : MonoBehaviour
     RobotController robot;
     BossController boss;
     BatController bat;
+    GhostController ghost;
     void Start()
     {
     }
@@ -18,39 +19,22 @@ public class Hitbox : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        float dmgValue = 0;
-
-        if (Weapons.hasLauncher)
+        if (other.gameObject.CompareTag("PlayerProjectile") || other.gameObject.CompareTag("BouncerBullet") || other.gameObject.CompareTag("Explosion"))
         {
-            dmgValue = 5;
-        }
+            float dmgValue;
 
-        if (Weapons.hasMagnum)
-        {
-            dmgValue = 5;
-        }
+            if (other.gameObject.CompareTag("Explosion"))
+            {
+                dmgValue = 6;
+            } else
+            {
+                dmgValue = other.gameObject.GetComponent<Projectile>().dmgValue;
+            }
 
-        if (Weapons.hasPistol)
-        {
-            dmgValue = 1;
-        }
-
-        if (Weapons.hasShotgun)
-        {
-            dmgValue = 1.8f;
-        }
-
-        if (Weapons.hasBouncer)
-        {
-            dmgValue = 2f;
-        }
-
-        
-        if (other.gameObject.CompareTag("PlayerProjectile") || other.gameObject.CompareTag("BouncerBullet"))
-        {
             robot = GetComponentInParent<RobotController>();
             boss = GetComponentInParent<BossController>();
             bat = GetComponentInParent<BatController>();
+            ghost = GetComponentInParent<GhostController>();
 
             // Robot Damage
             if (robot != null && !robot.dead)
@@ -68,6 +52,23 @@ public class Hitbox : MonoBehaviour
                 } 
 
                 robot.Damage(dmgValue);
+            }
+
+            if (ghost != null && !ghost.dead)
+            {
+                if (Perks.lifesteal)
+                {
+                    DudeController.currentHealth += .1f * dmgValue;
+                    DudeController.currentHealth = Mathf.Clamp(DudeController.currentHealth, 0, DudeController.maxHealth);
+                    UIHealthbar.instance.SetValue(DudeController.currentHealth / (float)DudeController.maxHealth);
+                }
+
+                if (ghost.dead)
+                {
+                    return;
+                } 
+
+                ghost.Damage(dmgValue);
             }
 
             // Boss Damage

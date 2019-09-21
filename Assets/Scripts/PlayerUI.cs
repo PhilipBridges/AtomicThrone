@@ -8,6 +8,7 @@ public class PlayerUI : MonoBehaviour
     public Text money;
     public Text level;
     public Text xp;
+    public Text ammo;
     public Slider xpBar;
 
     public Image shotgunImage;
@@ -29,7 +30,6 @@ public class PlayerUI : MonoBehaviour
         xp.text = DudeController.currentXp.ToString() + " / " + (int)DudeController.requiredXp + "  XP";
         xpBar.value = DudeController.currentXp;
         xpBar.maxValue = DudeController.requiredXp;
-
     }
 
     // Update is called once per frame
@@ -39,11 +39,16 @@ public class PlayerUI : MonoBehaviour
         level.text = "Lvl " + DudeController.level;
     }
 
-    public void SetValue(float value)
+    public void SetXPValue(float value)
     {
         xpBar.value = value;
         xpBar.value = DudeController.currentXp;
         xpBar.maxValue = DudeController.requiredXp;
+        xp.text = DudeController.currentXp.ToString() + " / " + (int)DudeController.requiredXp + "  XP";
+    }
+    public void SetAmmo(float value)
+    {
+        ammo.text = "x " + value.ToString();
         xp.text = DudeController.currentXp.ToString() + " / " + (int)DudeController.requiredXp + "  XP";
     }
 }

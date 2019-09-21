@@ -6,6 +6,9 @@ public class Projectile : MonoBehaviour
 {
     Vector3 aimDirection;
     Rigidbody2D rigidbody2d;
+    public GameObject explosion;
+    private bool boom = false;
+    public float dmgValue = 0;
 
     void Awake()
     {
@@ -15,6 +18,31 @@ public class Projectile : MonoBehaviour
         aimDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position);
         aimDirection.z = 0;
         aimDirection.Normalize();
+
+        if (Weapons.hasLauncher)
+        {
+            dmgValue = 5;
+        }
+
+        if (Weapons.hasMagnum)
+        {
+            dmgValue = 6.5f;
+        }
+
+        if (Weapons.hasPistol)
+        {
+            dmgValue = 1;
+        }
+
+        if (Weapons.hasShotgun)
+        {
+            dmgValue = 1.8f;
+        }
+
+        if (Weapons.hasBouncer)
+        {
+            dmgValue = 2f;
+        }
     }
 
     void Update()
@@ -31,6 +59,20 @@ public class Projectile : MonoBehaviour
         if (Weapons.hasBouncer)
         {
             StartCoroutine(KillTime(gameObject, 3.5f));
+        }
+        if (Weapons.hasLauncher)
+        {
+            StartCoroutine(Detonate(gameObject, 1.5f));
+        }
+    }
+
+    IEnumerator Detonate(GameObject gameobject, float time)
+    {
+        yield return new WaitForSeconds(time);
+        if (!boom)
+        {
+            Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
+            Destroy(gameObject);
         }
     }
 
@@ -50,9 +92,26 @@ public class Projectile : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        if (!Weapons.hasBouncer)
+        if (Weapons.hasBouncer)
         {
+            gameObject.GetComponent<AudioSource>().Play();
+        }
+
+        if (!Weapons.hasBouncer && !Weapons.hasLauncher)
+        {
+            
             Destroy(gameObject);
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (Weapons.hasLauncher)
+        {
+            Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
+            Destroy(gameObject);
+        }
+    }
+
 }
+

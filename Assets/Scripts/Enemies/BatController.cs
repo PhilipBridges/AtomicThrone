@@ -19,7 +19,7 @@ public class BatController : MonoBehaviour
     private float distanceToPlayer;
     Vector2 lookDirection = new Vector2(1, 0);
 
-    private float health = 3;
+    private float health = 5;
     private bool damaged = false;
     public bool dead = false;
     //Color lerp stuff 

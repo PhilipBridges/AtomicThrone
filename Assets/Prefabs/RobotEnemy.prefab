@@ -107,6 +107,8 @@ MonoBehaviour:
     type: 3}
   playerLoc: {x: 0, y: 0}
   drops: {fileID: 0}
+  death1: {fileID: 8300000, guid: 502f1f5e90de7411dbd9af39b59be2d5, type: 3}
+  hit: {fileID: 8300000, guid: 709a835b61b848644946696fdd5e5a4d, type: 3}
   dead: 0
 --- !u!114 &4183962775887217061
 MonoBehaviour:

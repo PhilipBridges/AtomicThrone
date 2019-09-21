@@ -13,19 +13,24 @@ public class DudeController : MonoBehaviour
     //public GameObject menu;
     public GameObject projectilePrefab;
     public GameObject bouncerPrefab;
-
+    public GameObject grenade;
+    // SOUND STUFF
     private AudioSource audioSource;
-    public AudioClip throwSound;
+    public AudioClip shotgunSound;
+    public AudioClip launcherSound;
+    public AudioClip magnumSound;
+    public AudioClip bouncerSound;
     public AudioClip shoot;
     public AudioClip hitSound;
-
+    public AudioClip pickupSound;
+    //-------------
     Vector2 movementDirection;
     Vector2 lookDirection = new Vector2(1, 0);
     public static Vector2 location;
 
     //Player things ---------------------------
     public static float maxHealth = 5;
-    public static float playerSpeed = 6f;
+    public static float playerSpeed = 5f;
     public static float timeInvincible = 1.0f;
     public static bool canShoot = true;
     public static float cooldown = 0.4f;
@@ -38,7 +43,6 @@ public class DudeController : MonoBehaviour
     public static float currentHealth;
     public static int statPoints;
     public static int perkPoints;
-    List<String> myPerks = new List<string>();
 
     //----------------------------------------
 
@@ -54,7 +58,7 @@ public class DudeController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         rend = GetComponent<SpriteRenderer>();
-        PlayerUI.instance.SetValue(currentXp);
+        PlayerUI.instance.SetXPValue(currentXp);
         canShoot = true;
         if (currentXp == 0)
         {
@@ -99,6 +103,10 @@ public class DudeController : MonoBehaviour
                 currentHealth = 5;
                 Weapons.PistolSwitch();
                 dead = false;
+                currentXp = 0;
+                totalXp = 0;
+                currentHealth = 5;
+                PlayerUI.instance.SetXPValue(0);
                 SceneManager.LoadScene(sceneBuildIndex: 0);
             }
         }
@@ -148,45 +156,56 @@ public class DudeController : MonoBehaviour
                 case "Shotgun":
                     Weapons.shotgunAmmo += 6;
                     Weapons.pickedUpShotgun = true;
-                    Debug.Log(Weapons.shotgunAmmo);
+                    if (Weapons.hasShotgun)
+                    {
+                        PlayerUI.instance.SetAmmo(Weapons.shotgunAmmo);
+                    }
+                    audioSource.volume = 1.5f;
+                    PlaySound(pickupSound);
+                    Destroy(other.gameObject);
                     break;
                 case "Bouncer":
                     Weapons.bouncerAmmo += 6;
                     Weapons.pickedUpBouncer = true;
-                    Debug.Log(Weapons.bouncerAmmo);
+                    if (Weapons.hasBouncer)
+                    {
+                        PlayerUI.instance.SetAmmo(Weapons.bouncerAmmo);
+                    }
+                    audioSource.volume = 1.5f;
+                    PlaySound(pickupSound);
+                    Destroy(other.gameObject);
                     break;
                 case "Magnum":
                     Weapons.magnumAmmo += 4;
                     Weapons.pickedUpMagnum = true;
-                    Debug.Log(Weapons.magnumAmmo);
+                    if (Weapons.hasMagnum)
+                    {
+                        PlayerUI.instance.SetAmmo(Weapons.magnumAmmo);
+                    }
+                    audioSource.volume = 1.5f;
+                    PlaySound(pickupSound);
+                    Destroy(other.gameObject);
                     break;
                 case "Launcher":
-                    Weapons.LauncherAmmo += 2;
+                    Weapons.launcherAmmo += 2;
                     Weapons.pickedUpLauncher = true;
-                    Debug.Log(Weapons.LauncherAmmo);
+                    if (Weapons.hasLauncher)
+                    {
+                        PlayerUI.instance.SetAmmo(Weapons.launcherAmmo);
+                    }
+                    audioSource.volume = 1.5f;
+                    PlaySound(pickupSound);
+                    Destroy(other.gameObject);
                     break;
                 default:
                     break;
             }
+            audioSource.volume = .165f;
         }
-    }
-
-    IEnumerator YouDied()
-    {
-        yield return new WaitForSeconds(2.5f);
-        currentXp = 0;
-        totalXp = 0;
-        currentHealth = 5;
-        PlayerUI.instance.SetValue(0);
-        SceneManager.LoadScene(sceneBuildIndex: 0);
     }
 
     public void ChangeHealth(int amount)
     {
-        if (dead)
-        {
-            StartCoroutine(YouDied());
-        }
         if (Perks.evasion)
         {
             int rand = UnityEngine.Random.Range(1, 100);
@@ -229,13 +248,13 @@ public class DudeController : MonoBehaviour
     {
         currentXp = currentXp + amount;
         totalXp = totalXp + amount;
-        PlayerUI.instance.SetValue(currentXp);
+        PlayerUI.instance.SetXPValue(currentXp);
         if (currentXp >= requiredXp)
         {
             level++;
             currentXp = 0;
             requiredXp = requiredXp * 1.1f;
-            PlayerUI.instance.SetValue(0);
+            PlayerUI.instance.SetXPValue(0);
             perkPoints++;
             statPoints++;
             LevelEnd.instance.IncreaseStatPoints();
@@ -253,7 +272,6 @@ public class DudeController : MonoBehaviour
 
             projectile.Launch(700);
             PlaySound(shoot);
-            PlaySound(throwSound);
         }
 
         if (Weapons.hasMagnum && Weapons.magnumAmmo > 0)
@@ -263,10 +281,10 @@ public class DudeController : MonoBehaviour
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
             projectile.Launch(800);
-            PlaySound(shoot);
-            PlaySound(throwSound);
+            PlaySound(magnumSound);
 
             Weapons.magnumAmmo--;
+            PlayerUI.instance.SetAmmo(Weapons.magnumAmmo);
         }
 
         if (Weapons.hasShotgun && Weapons.shotgunAmmo > 0)
@@ -282,21 +300,35 @@ public class DudeController : MonoBehaviour
             projectile1.Launch(700);
             projectile2.Launch(700);
             projectile3.Launch(700);
-            PlaySound(shoot);
-            PlaySound(throwSound);
+            PlaySound(shotgunSound);
 
             Weapons.shotgunAmmo--;
+            PlayerUI.instance.SetAmmo(Weapons.shotgunAmmo);
         }
 
-        if (Weapons.hasBouncer)
+        if (Weapons.hasBouncer && Weapons.bouncerAmmo > 0)
         {
             GameObject projectileObject = Instantiate(bouncerPrefab, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
             projectile.Launch(900);
-            PlaySound(shoot);
-            PlaySound(throwSound);
+            PlaySound(bouncerSound);
+            Weapons.bouncerAmmo--;
+            PlayerUI.instance.SetAmmo(Weapons.bouncerAmmo);
+        }
+
+        if (Weapons.hasLauncher && Weapons.launcherAmmo > 0)
+        {
+
+            GameObject projectileObject = Instantiate(grenade, rigidbody.position + Vector2.left * 0.2f + lookDirection * 0.4f, Quaternion.identity);
+
+            Projectile projectile = projectileObject.GetComponent<Projectile>();
+
+            projectile.Launch(900);
+            PlaySound(launcherSound);
+            Weapons.launcherAmmo--;
+            PlayerUI.instance.SetAmmo(Weapons.launcherAmmo);
         }
 
         yield return new WaitForSeconds(cooldown + weaponTime);

@@ -101,9 +101,14 @@ MonoBehaviour:
     type: 3}
   bouncerPrefab: {fileID: 411282117836868143, guid: dc6c297299a7aeb4a9bd2d98c6df55fe,
     type: 3}
-  throwSound: {fileID: 8300000, guid: b2edfd40873655249ba0e01a5cf705be, type: 3}
-  shoot: {fileID: 8300000, guid: 9afd6cc7134a3428cb7606e918101f8f, type: 3}
+  grenade: {fileID: 4469372595500884816, guid: 7e2818d5fc341014b9858e383ce02c5b, type: 3}
+  shotgunSound: {fileID: 8300000, guid: a6596c71bad561b47a8fd85232125a5c, type: 3}
+  launcherSound: {fileID: 8300000, guid: e541dc13526805b46b0875b483590b70, type: 3}
+  magnumSound: {fileID: 8300000, guid: 8ac1b8948cce8f1409a0cf8dac5361aa, type: 3}
+  bouncerSound: {fileID: 8300000, guid: 0800b4854e84ad243a55e1f7a44844f2, type: 3}
+  shoot: {fileID: 8300000, guid: c8c4c2fc396c17d4782362c72b190b27, type: 3}
   hitSound: {fileID: 0}
+  pickupSound: {fileID: 8300000, guid: 543630c66e19549c1a26509f0088820d, type: 3}
 --- !u!50 &912758729794977062
 Rigidbody2D:
   serializedVersion: 4

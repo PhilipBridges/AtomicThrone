@@ -51,6 +51,7 @@ public class LevelEnd : MonoBehaviour
         randPerks.Clear();
         if (LevelManager.stage == 1)
         {
+            perkPool.Clear();
             foreach (var perk in Perks.unlockedPerks)
             {
                 perkPool.Add(perk);

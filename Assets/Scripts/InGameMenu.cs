@@ -18,7 +18,6 @@ public class InGameMenu : MonoBehaviour
         {
             menuCanvas.enabled = false;
         }
-        GameObject.FindGameObjectWithTag("Music").GetComponent<Music>().PlayMusic();
         closeable = false;
     }
 
@@ -66,6 +65,7 @@ public class InGameMenu : MonoBehaviour
 
     public void BackToMenu()
     {
+        LevelManager.stage = 1;
         SceneManager.LoadScene(sceneBuildIndex: 0);
     }
 

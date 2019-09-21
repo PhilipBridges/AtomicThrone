@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class RobotController : MonoBehaviour
 {
-    public float speed = 3;
+    public float speed = 2.7f;
     public ParticleSystem smokeEffect;
     public GameObject projectilePrefab;
     public Vector2 playerLoc;
@@ -16,12 +16,16 @@ public class RobotController : MonoBehaviour
     private new AudioSource audio;
     new Rigidbody2D rigidbody2D;
     Animator animator;
+
+    public AudioClip death1;
+    public AudioClip hit;
+
     public bool dead = false;
     float timer;
     float resetTime = 1.0f;
     private float distanceToPlayer;
 
-    private float health = 5;
+    private float health = 6;
     private bool damaged = false;
     //Color lerp stuff 
     Color colorStart = Color.red;
@@ -53,17 +57,17 @@ public class RobotController : MonoBehaviour
     private void Awake()
     {
         float roll = GetComponent<Drops>().DropRoll();
-        if (roll < 50)
+        if (roll < 40)
         {
             dropShotgun = true;
             return;
         }
-        if (roll > 50 && roll < 75)
+        if (roll > 40 && roll < 65)
         {
             dropBouncer = true;
             return;
         }
-        if (roll > 75 && roll < 90)
+        if (roll > 65 && roll < 90)
         {
             dropMagnum = true;
             return;
@@ -156,6 +160,9 @@ public class RobotController : MonoBehaviour
         if (!damaged)
         {
             damaged = true;
+            audio.volume = 1.5f;
+            audio.PlayOneShot(hit);
+            audio.volume = .435f;
             StartCoroutine("SwitchColor");
         }
         health -= dmgValue;
@@ -171,12 +178,13 @@ public class RobotController : MonoBehaviour
 
     private void Kill()
     {
+        audio.Stop();
+        audio.PlayOneShot(death1);
         nav.speed = 0;
         this.GetComponentInChildren<Hitbox>().gameObject.layer = 16;
         rigidbody2D.bodyType = RigidbodyType2D.Static;
         dead = true;
         animator.SetTrigger("Fixed");
-        audio.Stop();
         smokeEffect.Play();
 
         if (dropShotgun)

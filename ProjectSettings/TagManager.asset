@@ -22,6 +22,8 @@ TagManager:
   - Launcher
   - Bouncer
   - BouncerBullet
+  - Grenade
+  - Explosion
   layers:
   - Default
   - TransparentFX

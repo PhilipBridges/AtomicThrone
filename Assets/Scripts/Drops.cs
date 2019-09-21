@@ -35,7 +35,6 @@ public class Drops : MonoBehaviour
 
         if (willDrop < 35)
         {
-            Debug.Log("Will Drop Something");
             dropVal = CurveWeightedRandom(dropCurve);
             return dropVal;
         }

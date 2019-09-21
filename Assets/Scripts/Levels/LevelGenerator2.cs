@@ -62,10 +62,6 @@ public class LevelGenerator2 : MonoBehaviour
         Nav.instance.LoadNav();
         SpawnpointSearch();
         SpawnEnemies();
-        if (LevelManager.stage < 5)
-        {
-            LevelManager.stage = 5;
-        }
     }
     void Setup()
     {

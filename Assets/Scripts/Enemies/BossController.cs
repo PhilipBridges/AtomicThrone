@@ -49,22 +49,22 @@ public class BossController : MonoBehaviour
     {
         float roll = GetComponent<Drops>().DropRoll();
 
-        if (roll < 50)
+        if (roll < 25)
         {
             dropShotgun = true;
             return;
         }
-        if (roll > 50 && roll < 75)
+        if (roll > 25 && roll < 50)
         {
             dropBouncer = true;
             return;
         }
-        if (roll > 75 && roll < 90)
+        if (roll > 50 && roll < 70)
         {
             dropMagnum = true;
             return;
         }
-        if (roll > 90 && roll < 100)
+        if (roll > 70 && roll < 100)
         {
             dropLauncher = true;
             return;
@@ -91,7 +91,7 @@ public class BossController : MonoBehaviour
 
         playerLoc = player.transform.position;
         distanceToPlayer = Vector2.Distance(transform.position, playerLoc);
-        if (health < 5)
+        if (health < 15)
         {
             MoveToPlayer();
         }
@@ -224,7 +224,6 @@ public class BossController : MonoBehaviour
     // Called from Boss animations
     void DamagePlayer()
     {
-        Debug.Log(distanceToPlayer);
         if (distanceToPlayer < 3.4)
         {
             player.gameObject.GetComponent<DudeController>().ChangeHealth(-2);

@@ -2572,11 +2572,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BG Music
       objectReference: {fileID: 0}
-    - target: {fileID: 1510365985659489551, guid: 9012a028e7712944893222e3e9ae292e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1510365985659489585, guid: 9012a028e7712944893222e3e9ae292e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2631,11 +2626,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1510365985659489584, guid: 9012a028e7712944893222e3e9ae292e,
-        type: 3}
-      propertyPath: m_PlayOnAwake
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9012a028e7712944893222e3e9ae292e, type: 3}

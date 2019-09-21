@@ -75,6 +75,7 @@ public class LevelManager : MonoBehaviour
 
         while (!asyncOperation.isDone)
         {
+            DudeController.canShoot = false;
             if (asyncOperation.progress >= 0.9f)
             {
                 if (Input.GetKeyDown(KeyCode.Space))
@@ -82,6 +83,7 @@ public class LevelManager : MonoBehaviour
                     loadingScreen = GameObject.FindGameObjectWithTag("Loading");
                     loadingScreen.GetComponent<Canvas>().enabled = true;
 
+                    DudeController.canShoot = true;
                     asyncOperation.allowSceneActivation = true;
                 }
             }
