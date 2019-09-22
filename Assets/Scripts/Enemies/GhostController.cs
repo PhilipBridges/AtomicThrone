@@ -121,7 +121,7 @@ public class GhostController : MonoBehaviour
             MoveToPlayer();
         }
 
-        if (distanceToPlayer < 3f)
+        if (distanceToPlayer < 2f)
         {
             if (timer < 0)
             {
@@ -215,41 +215,11 @@ public class GhostController : MonoBehaviour
 
     void Attack()
     {
-        if (distanceToPlayer < 3f)
-        {
-            if (lookDirection.x < -.4f/* && lookDirection.y < .4f*/)
-            {
-                animator.SetBool("AttackLeft", true);
-                nav.speed = 4;
-            }
-
-            if (lookDirection.x > .4f /*&& lookDirection.y < .4f*/)
-            {
-                animator.SetBool("AttackRight", true);
-                nav.speed = 4;
-            }
-
-            if (lookDirection.y > .4f)
-            {
-                animator.SetBool("AttackUp", true);
-                nav.speed = 4;
-            }
-            if (lookDirection.y < -.4f)
-            {
-                animator.SetBool("AttackDown", true);
-                nav.speed = 4;
-            }
-        }
-        StartCoroutine(Freeze());
-    }
-
-    // Called from Ghost animations
-    void DamagePlayer()
-    {
-        if (distanceToPlayer < 3)
+        if (distanceToPlayer < 2f)
         {
             player.gameObject.GetComponent<DudeController>().ChangeHealth(-1);
         }
+        StartCoroutine(Freeze());
     }
 
     IEnumerator Freeze()

@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -13981,6 +13981,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9122637163208670431, guid: 7f9630a422895e648ae4450b37c1fc65,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7f9630a422895e648ae4450b37c1fc65, type: 3}
 --- !u!1 &1992982392 stripped
@@ -14821,5 +14826,15 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1510365985659489586, guid: 9012a028e7712944893222e3e9ae292e,
+        type: 3}
+      propertyPath: music2
+      value: 
+      objectReference: {fileID: 8300000, guid: e2258d67391b1b34591057263476a379, type: 3}
+    - target: {fileID: 1510365985659489586, guid: 9012a028e7712944893222e3e9ae292e,
+        type: 3}
+      propertyPath: music1
+      value: 
+      objectReference: {fileID: 8300000, guid: aa3979bda6ddb174ba128dbcac3ed5a4, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9012a028e7712944893222e3e9ae292e, type: 3}
