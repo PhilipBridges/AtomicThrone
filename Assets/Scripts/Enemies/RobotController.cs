@@ -16,6 +16,7 @@ public class RobotController : MonoBehaviour
     private new AudioSource audio;
     new Rigidbody2D rigidbody2D;
     Animator animator;
+    public GameObject hitLight;
 
     public AudioClip death1;
     public AudioClip hit;
@@ -25,7 +26,7 @@ public class RobotController : MonoBehaviour
     float resetTime = 1.0f;
     private float distanceToPlayer;
 
-    private float health = 6;
+    private float health = 5;
     private bool damaged = false;
     //Color lerp stuff 
     Color colorStart = Color.red;
@@ -51,7 +52,7 @@ public class RobotController : MonoBehaviour
         timer = 1.0f;
         smokeEffect.Stop();
         rigidbody2D.transform.rotation = new Quaternion(0,0,0,0);
-
+        hitLight.SetActive(false);
     }
 
     private void Awake()
@@ -170,9 +171,9 @@ public class RobotController : MonoBehaviour
 
     IEnumerator SwitchColor()
     {
-        rend.material.color = new Color(1f, 0.30196078f, 0.30196078f);
+        hitLight.SetActive(true);
         yield return new WaitForSeconds(.2f);
-        rend.material.color = Color.white;
+        hitLight.SetActive(false);
         damaged = false;
     }
 

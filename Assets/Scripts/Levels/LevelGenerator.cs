@@ -14,8 +14,9 @@ public class LevelGenerator : MonoBehaviour {
 		public Vector2 dir;
 		public Vector2 pos;
 	}
-	public Tilemap waterMap;
+	public Tilemap wallMap2;
 	public Tilemap floorMap;
+	public Tilemap floorMap2;
 	public Tilemap wallMap;
 	public TileBase floorTile;
 	public TileBase floorTile2;
@@ -29,9 +30,8 @@ public class LevelGenerator : MonoBehaviour {
 	float percentToFill = 0.5f; 
 	public GameObject waterObj, floorObj, wallObj;
 	//for enemy generation
-	public GameObject robot;
     public GameObject boss;
-    public GameObject ghost;
+    public GameObject bat;
 	[Range(1, 25)]
 	public int spawnChance = 5;
 	Task task;
@@ -327,7 +327,7 @@ public class LevelGenerator : MonoBehaviour {
             if (enemiesToSpawn > 0 && rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
             {
                 Vector3 spawnVec = Vector3Int.FloorToInt(spawnPos);
-                Instantiate(ghost, spawnVec, Quaternion.identity);
+                Instantiate(bat, spawnVec, Quaternion.identity);
                 enemiesToSpawn--;
                 enemiesLeft++;
             }
@@ -379,7 +379,7 @@ public class LevelGenerator : MonoBehaviour {
 
             if (rand > 1 && rand < 10)
             {
-                floorMap.SetTile(floorVec, floorTile2);
+                floorMap2.SetTile(floorVec, floorTile2);
             }
             
             else
@@ -391,7 +391,7 @@ public class LevelGenerator : MonoBehaviour {
 		if (toSpawn == waterObj)
 		{
 			Vector3Int waterVec = Vector3Int.FloorToInt(new Vector2(x, y) * worldUnitsInOneGridCell - offset);
-			waterMap.SetTile(waterVec, waterTile);
+			wallMap2.SetTile(waterVec, waterTile);
 		}
 		
 		if (toSpawn == wallObj)

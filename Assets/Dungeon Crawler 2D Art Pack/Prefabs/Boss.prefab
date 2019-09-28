@@ -53,7 +53,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -61,6 +61,7 @@ SpriteRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -115,6 +116,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a46acf209f346844abb5dd645793fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  drops: {fileID: 0}
+  dead: 0
 --- !u!61 &6110546263442478506
 BoxCollider2D:
   m_ObjectHideFlags: 0

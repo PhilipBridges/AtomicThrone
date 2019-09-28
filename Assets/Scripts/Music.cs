@@ -8,6 +8,7 @@ public class Music : MonoBehaviour
     public AudioSource _audioSource;
     public AudioClip music1;
     public AudioClip music2;
+    public AudioClip music3;
     private void Awake()
     {
         int numMusicPlayers = FindObjectsOfType<Music>().Length;
@@ -57,6 +58,19 @@ public class Music : MonoBehaviour
             _audioSource.clip = music2;
             _audioSource.Stop();
             _audioSource.clip = music2;
+            _audioSource.volume = .05f;
+            _audioSource.Play();
+        }
+        if (scene.name == "Level3")
+        {
+            if (_audioSource.isPlaying && _audioSource.clip == music3)
+            {
+                return;
+            }
+
+            _audioSource.clip = music3;
+            _audioSource.Stop();
+            _audioSource.clip = music3;
             _audioSource.volume = .05f;
             _audioSource.Play();
         }

@@ -24,9 +24,13 @@ public class LevelManager : MonoBehaviour
             {
                 asyncOperation = SceneManager.LoadSceneAsync("Level1");
             }
-            else
+            else if (stage > 5 && stage < 10)
             {
                 asyncOperation = SceneManager.LoadSceneAsync("Level2");
+            }
+            else if (stage > 10 && stage < 15)
+            {
+                asyncOperation = SceneManager.LoadSceneAsync("Level3");
             }
 
             asyncOperation.allowSceneActivation = false;

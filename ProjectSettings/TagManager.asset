@@ -24,6 +24,7 @@ TagManager:
   - BouncerBullet
   - Grenade
   - Explosion
+  - HitLight
   layers:
   - Default
   - TransparentFX

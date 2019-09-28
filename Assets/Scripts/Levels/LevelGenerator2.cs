@@ -19,6 +19,7 @@ public class LevelGenerator2 : MonoBehaviour
     // TILE STUFF
     public Tilemap wall2Map;
     public Tilemap floorMap;
+    public Tilemap floorMap2;
     public Tilemap wallMap;
     public TileBase floorTile;
     public TileBase floorTile2;
@@ -34,7 +35,7 @@ public class LevelGenerator2 : MonoBehaviour
     float percentToFill = 0.5f;
     public GameObject waterObj, floorObj, wallObj;
     //for bat generation
-    public GameObject bat;
+    public GameObject ghost;
     public GameObject boss;
     [Range(1, 25)]
     public int spawnChance = 5;
@@ -365,11 +366,11 @@ public class LevelGenerator2 : MonoBehaviour
         float distance = Vector3.Distance(new Vector3(x, y), new Vector3(player.transform.position.x, player.transform.position.y));
         if (distance > 50f)
         {
-            // Spawn bat chance
+            // Spawn ghost chance
             if (enemiesToSpawn > 0 && rand < spawnChance && grid[x + 1, y] != gridSpace.wall && grid[x - 1, y] != gridSpace.wall && grid[x, y + 1] != gridSpace.wall && grid[x, y - 1] != gridSpace.wall)
             {
                 Vector3 spawnVec = Vector3Int.FloorToInt(spawnPos);
-                Instantiate(bat, spawnVec, Quaternion.identity);
+                Instantiate(ghost, spawnVec, Quaternion.identity);
                 enemiesToSpawn--;
                 enemiesLeft++;
             }
@@ -426,7 +427,7 @@ public class LevelGenerator2 : MonoBehaviour
         {
             if (rand > 1 && rand < 10)
             {
-                floorMap.SetTile(spawnPos, floorTile2);
+                floorMap2.SetTile(spawnPos, floorTile2);
             }
 
             else

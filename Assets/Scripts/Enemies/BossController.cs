@@ -195,13 +195,13 @@ public class BossController : MonoBehaviour
     {
         if (distanceToPlayer < 4.5f)
         {
-            if (lookDirection.x < -.4f/* && lookDirection.y < .4f*/)
+            if (lookDirection.x < -.4f)
             {
                 animator.SetBool("AttackLeft", true);
                 nav.speed = 4;
             } 
 
-            if (lookDirection.x > .4f /*&& lookDirection.y < .4f*/)
+            if (lookDirection.x > .4f)
             {
                 animator.SetBool("AttackRight", true);
                 nav.speed = 4;

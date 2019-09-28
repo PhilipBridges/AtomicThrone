@@ -1,5 +1,75 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2232574648431108579
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5379492922597156744}
+  - component: {fileID: 8074934403699753365}
+  m_Layer: 0
+  m_Name: Light
+  m_TagString: HitLight
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5379492922597156744
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2232574648431108579}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.02, y: 0.62, z: -0.017578125}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4351951957838950978}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8074934403699753365
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2232574648431108579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.99
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Intensity: 3.47
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 1
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 0.61
+  m_PointLightDistance: 3.3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &5948190811058006844
 GameObject:
   m_ObjectHideFlags: 0
@@ -37,6 +107,7 @@ Transform:
   m_Children:
   - {fileID: 2113591642866549536}
   - {fileID: 4382239864139631565}
+  - {fileID: 5379492922597156744}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -57,7 +128,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -107,6 +178,7 @@ MonoBehaviour:
     type: 3}
   playerLoc: {x: 0, y: 0}
   drops: {fileID: 0}
+  hitLight: {fileID: 2232574648431108579}
   death1: {fileID: 8300000, guid: 502f1f5e90de7411dbd9af39b59be2d5, type: 3}
   hit: {fileID: 8300000, guid: 709a835b61b848644946696fdd5e5a4d, type: 3}
   dead: 0
@@ -479,6 +551,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3602456967791362446, guid: 35dd5002c66de6c4fb1bbd653e6a6240,
+        type: 3}
+      propertyPath: LightsModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3602456967791362446, guid: 35dd5002c66de6c4fb1bbd653e6a6240,
+        type: 3}
+      propertyPath: CustomDataModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3602456967791362446, guid: 35dd5002c66de6c4fb1bbd653e6a6240,
+        type: 3}
+      propertyPath: UVModule.sprites.Array.data[1].sprite
+      value: 
+      objectReference: {fileID: 21300002, guid: bb5bb2f184426a64cac53faa220820f5,
+        type: 3}
     - target: {fileID: 770851450722638898, guid: 35dd5002c66de6c4fb1bbd653e6a6240,
         type: 3}
       propertyPath: m_SortingOrder
@@ -489,6 +577,11 @@ PrefabInstance:
       propertyPath: m_RenderAlignment
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 770851450722638898, guid: 35dd5002c66de6c4fb1bbd653e6a6240,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: f3813d23381fbd94c90c4c66df5013f5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 35dd5002c66de6c4fb1bbd653e6a6240, type: 3}
 --- !u!4 &2113591642866549536 stripped

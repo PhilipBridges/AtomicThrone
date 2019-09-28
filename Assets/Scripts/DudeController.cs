@@ -91,6 +91,7 @@ public class DudeController : MonoBehaviour
         Stage();
         GodMode();
         Win();
+        Money();
         Weapons.AllWeapons();
 
         if (currentHealth <= 0)
@@ -107,6 +108,17 @@ public class DudeController : MonoBehaviour
                 totalXp = 0;
                 currentHealth = 5;
                 PlayerUI.instance.SetXPValue(0);
+
+                Weapons.bouncerAmmo = 0;
+                Weapons.shotgunAmmo = 0;
+                Weapons.launcherAmmo = 0;
+                Weapons.magnumAmmo = 0;
+                Weapons.hasPistol = true;
+                Weapons.pickedUpShotgun = false;
+                Weapons.pickedUpMagnum = false;
+                Weapons.pickedUpLauncher = false;
+                Weapons.pickedUpBouncer = false;
+
                 SceneManager.LoadScene(sceneBuildIndex: 0);
             }
         }
@@ -154,7 +166,7 @@ public class DudeController : MonoBehaviour
             switch (other.gameObject.tag)
             {
                 case "Shotgun":
-                    Weapons.shotgunAmmo += 6;
+                    Weapons.shotgunAmmo += 4;
                     Weapons.pickedUpShotgun = true;
                     if (Weapons.hasShotgun)
                     {
@@ -187,7 +199,7 @@ public class DudeController : MonoBehaviour
                     Destroy(other.gameObject);
                     break;
                 case "Launcher":
-                    Weapons.launcherAmmo += 2;
+                    Weapons.launcherAmmo += 3;
                     Weapons.pickedUpLauncher = true;
                     if (Weapons.hasLauncher)
                     {
@@ -251,14 +263,17 @@ public class DudeController : MonoBehaviour
         PlayerUI.instance.SetXPValue(currentXp);
         if (currentXp >= requiredXp)
         {
-            level++;
+            ++level;
             currentXp = 0;
             requiredXp = requiredXp * 1.1f;
             PlayerUI.instance.SetXPValue(0);
-            perkPoints++;
             statPoints++;
             LevelEnd.instance.IncreaseStatPoints();
-            LevelEnd.instance.IncreasePerkPoints();
+            if (level % 2 == 0)
+            {
+                perkPoints++;
+                LevelEnd.instance.IncreasePerkPoints();
+            }
         }
     }
     IEnumerator Launch()
@@ -442,6 +457,13 @@ public class DudeController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             LevelManager.WinCheck();
+        }
+    }
+    void Money()
+    {
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            currentMoney += 100;
         }
     }
 
