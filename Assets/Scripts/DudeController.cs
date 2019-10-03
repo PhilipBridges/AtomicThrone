@@ -96,31 +96,7 @@ public class DudeController : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            anim.SetTrigger("Death");
-            dead = true;
-            deathDelay -= Time.deltaTime;
-            if (deathDelay <= 0)
-            {
-                currentHealth = 5;
-                Weapons.PistolSwitch();
-                dead = false;
-                currentXp = 0;
-                totalXp = 0;
-                currentHealth = 5;
-                PlayerUI.instance.SetXPValue(0);
-
-                Weapons.bouncerAmmo = 0;
-                Weapons.shotgunAmmo = 0;
-                Weapons.launcherAmmo = 0;
-                Weapons.magnumAmmo = 0;
-                Weapons.hasPistol = true;
-                Weapons.pickedUpShotgun = false;
-                Weapons.pickedUpMagnum = false;
-                Weapons.pickedUpLauncher = false;
-                Weapons.pickedUpBouncer = false;
-
-                SceneManager.LoadScene(sceneBuildIndex: 0);
-            }
+            DeadPlayer();
         }
 
         location = this.gameObject.transform.position;
@@ -218,6 +194,7 @@ public class DudeController : MonoBehaviour
 
     public void ChangeHealth(int amount)
     {
+        amount += LevelManager.difficulty;
         if (Perks.evasion)
         {
             int rand = UnityEngine.Random.Range(1, 100);
@@ -253,11 +230,19 @@ public class DudeController : MonoBehaviour
 
     public void ChangeMoney(int amount)
     {
+        if (LevelManager.difficulty != 0)
+        {
+            amount = Convert.ToInt32(amount + LevelManager.difficulty * 1.1f);
+        }
         currentMoney += amount;
     }
 
     public void ChangeXp(int amount)
     {
+        if (LevelManager.difficulty != 0)
+        {
+            amount = Convert.ToInt32(amount + LevelManager.difficulty * 1.1f);
+        }
         currentXp = currentXp + amount;
         totalXp = totalXp + amount;
         PlayerUI.instance.SetXPValue(currentXp);
@@ -348,6 +333,36 @@ public class DudeController : MonoBehaviour
 
         yield return new WaitForSeconds(cooldown + weaponTime);
         canShoot = true;
+    }
+
+    private void DeadPlayer()
+    {
+        anim.SetTrigger("Death");
+        dead = true;
+        deathDelay -= Time.deltaTime;
+        if (deathDelay <= 0)
+        {
+            currentHealth = 5;
+            maxHealth = 5;
+            Weapons.PistolSwitch();
+            dead = false;
+            currentXp = 0;
+            totalXp = 0;
+            level = 0;
+            PlayerUI.instance.SetXPValue(0);
+
+            Weapons.bouncerAmmo = 0;
+            Weapons.shotgunAmmo = 0;
+            Weapons.launcherAmmo = 0;
+            Weapons.magnumAmmo = 0;
+            Weapons.hasPistol = true;
+            Weapons.pickedUpShotgun = false;
+            Weapons.pickedUpMagnum = false;
+            Weapons.pickedUpLauncher = false;
+            Weapons.pickedUpBouncer = false;
+
+            SceneManager.LoadScene(sceneBuildIndex: 0);
+        }
     }
 
     IEnumerator SwitchColorRed()

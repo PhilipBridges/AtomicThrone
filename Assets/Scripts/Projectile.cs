@@ -106,7 +106,7 @@ public class Projectile : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (Weapons.hasLauncher)
+        if (Weapons.hasLauncher && collision.tag != "Bouncer" && collision.tag != "Magnum" && collision.tag != "Launcher" && collision.tag != "Launcher")
         {
             Instantiate(explosion, gameObject.transform.position, Quaternion.identity);
             Destroy(gameObject);

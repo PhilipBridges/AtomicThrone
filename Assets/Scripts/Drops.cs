@@ -14,24 +14,26 @@ public class Drops : MonoBehaviour
 
     public void DropShotgunAmmo(Vector2 position)
     {
-       GameObject shotgunAmmoDrop = Instantiate(shotgun, position, Quaternion.identity);
+       Instantiate(shotgun, position, Quaternion.identity);
     }
     public void DropMagnumAmmo(Vector2 position)
     {
-        GameObject magnumAmmoDrop = Instantiate(magnum, position, Quaternion.identity);
+        Instantiate(magnum, position, Quaternion.identity);
     }
     public void DropLauncherAmmo(Vector2 position)
     {
-        GameObject launcherAmmoDrop = Instantiate(launcher, position, Quaternion.identity);
+        Instantiate(launcher, position, Quaternion.identity);
     }
     public void DropBouncerAmmo(Vector2 position)
     {
-        GameObject bouncerAmmoDrop = Instantiate(bouncer, position, Quaternion.identity);
+        Instantiate(bouncer, position, Quaternion.identity);
     }
 
     public float DropRoll()
     {
         float willDrop = Random.Range(1f, 100f);
+        willDrop -= LevelManager.difficulty;
+        willDrop = Mathf.Clamp(willDrop, 1, 100);
 
         if (willDrop < 35)
         {

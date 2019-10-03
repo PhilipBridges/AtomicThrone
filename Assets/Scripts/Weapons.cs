@@ -44,7 +44,7 @@ public class Weapons : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha2) && pickedUpShotgun)
         {
-            DudeController.weaponTime = .4f;
+            DudeController.weaponTime = .7f;
             hasPistol = false;
             hasShotgun = true;
             hasMagnum = false;
@@ -65,7 +65,7 @@ public class Weapons : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha3) && pickedUpMagnum)
         {
-            DudeController.weaponTime = .7f;
+            DudeController.weaponTime = .8f;
             hasPistol = false;
             hasShotgun = false;
             hasMagnum = true;
@@ -107,7 +107,7 @@ public class Weapons : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha5) && pickedUpBouncer)
         {
-            DudeController.weaponTime = .5f;
+            DudeController.weaponTime = .6f;
             hasPistol = false;
             hasShotgun = false;
             hasMagnum = false;

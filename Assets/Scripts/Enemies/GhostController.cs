@@ -19,7 +19,7 @@ public class GhostController : MonoBehaviour
     private float distanceToPlayer;
     Vector2 lookDirection = new Vector2(1, 0);
 
-    private float health = 5;
+    public float health = 5;
     private bool damaged = false;
     public bool dead = false;
 
@@ -60,6 +60,7 @@ public class GhostController : MonoBehaviour
 
     private void Awake()
     {
+        health += LevelManager.difficulty;
         float roll = GetComponent<Drops>().DropRoll();
 
         if (roll < 50)
@@ -82,7 +83,6 @@ public class GhostController : MonoBehaviour
             dropLauncher = true;
             return;
         }
-
     }
 
     void Update()
@@ -105,7 +105,7 @@ public class GhostController : MonoBehaviour
             currentColor = colorRed;
         }
 
-        rend.material.color = Color.Lerp(rend.material.color, currentColor, 1);
+        //rend.material.color = Color.Lerp(rend.material.color, currentColor, 1);
 
         timer -= Time.deltaTime;
 

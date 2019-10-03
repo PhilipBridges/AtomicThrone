@@ -1934,6 +1934,11 @@ PrefabInstance:
       propertyPath: music2
       value: 
       objectReference: {fileID: 8300000, guid: e2258d67391b1b34591057263476a379, type: 3}
+    - target: {fileID: 1510365985659489586, guid: 9012a028e7712944893222e3e9ae292e,
+        type: 3}
+      propertyPath: music3
+      value: 
+      objectReference: {fileID: 8300000, guid: 578f2643649f8ab4a9c925da1aec3993, type: 3}
     - target: {fileID: 9190056179311743460, guid: 9012a028e7712944893222e3e9ae292e,
         type: 3}
       propertyPath: m_Volume

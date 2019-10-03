@@ -42,8 +42,8 @@ public class Music : MonoBehaviour
                 return;
             }
 
-            _audioSource.clip = music1;
-            _audioSource.Stop();
+            //_audioSource.clip = music1;
+            //_audioSource.Stop();
             _audioSource.clip = music1;
             _audioSource.volume = .164f;
             _audioSource.Play();
@@ -55,8 +55,8 @@ public class Music : MonoBehaviour
                 return;
             }
 
-            _audioSource.clip = music2;
-            _audioSource.Stop();
+            //_audioSource.clip = music2;
+            //_audioSource.Stop();
             _audioSource.clip = music2;
             _audioSource.volume = .05f;
             _audioSource.Play();
@@ -68,8 +68,8 @@ public class Music : MonoBehaviour
                 return;
             }
 
-            _audioSource.clip = music3;
-            _audioSource.Stop();
+            //_audioSource.clip = music3;
+            //_audioSource.Stop();
             _audioSource.clip = music3;
             _audioSource.volume = .05f;
             _audioSource.Play();

@@ -38,10 +38,10 @@ public class EnemyProjectile : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         DudeController player = other.gameObject.GetComponent<DudeController>();
-
+        int bonusDamage = LevelManager.difficulty;
         if (player != null)
         {
-            player.ChangeHealth(-1);
+            player.ChangeHealth(-1 - bonusDamage);
         }
 
         Destroy(gameObject);

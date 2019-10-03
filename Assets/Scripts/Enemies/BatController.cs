@@ -49,6 +49,7 @@ public class BatController : MonoBehaviour
 
     private void Awake()
     {
+        health += LevelManager.difficulty;
         float roll = GetComponent<Drops>().DropRoll();
 
         if (roll < 50)

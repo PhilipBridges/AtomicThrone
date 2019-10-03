@@ -8,9 +8,11 @@ public class LevelManager : MonoBehaviour
     AsyncOperation asyncOperation;
     public static GameObject loadingScreen;
     public static int stage = 1;
-    public static int difficulty;
+    public static int difficulty = 0;
     public static int remainingEnemies = 0;
     public static bool done = false;
+
+
     void Start()
     {
     }
@@ -20,17 +22,23 @@ public class LevelManager : MonoBehaviour
         if (done)
         {
             done = false;
-            if (stage < 5)
+            if (stage <= 5)
             {
                 asyncOperation = SceneManager.LoadSceneAsync("Level1");
             }
-            else if (stage > 5 && stage < 10)
+            else if (stage >= 6 && stage <= 10)
             {
                 asyncOperation = SceneManager.LoadSceneAsync("Level2");
             }
-            else if (stage > 10 && stage < 15)
+            else if (stage >= 11 && stage <= 16)
             {
                 asyncOperation = SceneManager.LoadSceneAsync("Level3");
+            }
+            else if (stage > 16)
+            {
+                stage = 1;
+                difficulty++;
+                asyncOperation = SceneManager.LoadSceneAsync("Level1");
             }
 
             asyncOperation.allowSceneActivation = false;
