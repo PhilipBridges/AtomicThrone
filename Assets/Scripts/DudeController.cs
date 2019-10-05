@@ -30,7 +30,7 @@ public class DudeController : MonoBehaviour
 
     //Player things ---------------------------
     public static float maxHealth = 5;
-    public static float playerSpeed = 5f;
+    public static float playerSpeed = 4f;
     public static float timeInvincible = 1.0f;
     public static bool canShoot = true;
     public static float cooldown = 0.4f;
@@ -76,13 +76,16 @@ public class DudeController : MonoBehaviour
         }
     }
 
-    void Update()
+    private void FixedUpdate()
     {
-        
         MoveUp();
         MoveDown();
         MoveLeft();
         MoveRight();
+    }
+
+    void Update()
+    {
         Weapons.PistolSwitch();
         Weapons.ShotgunSwitch();
         Weapons.MagnumSwitch();
@@ -270,7 +273,7 @@ public class DudeController : MonoBehaviour
 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
-            projectile.Launch(700);
+            projectile.Launch(2700);
             PlaySound(shoot);
         }
 
@@ -280,7 +283,7 @@ public class DudeController : MonoBehaviour
 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
-            projectile.Launch(800);
+            projectile.Launch(2800);
             PlaySound(magnumSound);
 
             Weapons.magnumAmmo--;
@@ -297,9 +300,9 @@ public class DudeController : MonoBehaviour
             Projectile projectile2 = shotgunShell2.GetComponent<Projectile>();
             Projectile projectile3 = shotgunShell3.GetComponent<Projectile>();
 
-            projectile1.Launch(700);
-            projectile2.Launch(700);
-            projectile3.Launch(700);
+            projectile1.Launch(2700);
+            projectile2.Launch(2700);
+            projectile3.Launch(2700);
             PlaySound(shotgunSound);
 
             Weapons.shotgunAmmo--;
@@ -312,7 +315,7 @@ public class DudeController : MonoBehaviour
 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
-            projectile.Launch(900);
+            projectile.Launch(2900);
             PlaySound(bouncerSound);
             Weapons.bouncerAmmo--;
             PlayerUI.instance.SetAmmo(Weapons.bouncerAmmo);
@@ -325,7 +328,7 @@ public class DudeController : MonoBehaviour
 
             Projectile projectile = projectileObject.GetComponent<Projectile>();
 
-            projectile.Launch(900);
+            projectile.Launch(2400);
             PlaySound(launcherSound);
             Weapons.launcherAmmo--;
             PlayerUI.instance.SetAmmo(Weapons.launcherAmmo);
@@ -384,11 +387,11 @@ public class DudeController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Vector2 move = new Vector2(horizontal, vertical);
-
         Vector2 position = rigidbody.position;
+        position.x = position.x + playerSpeed * horizontal * Time.smoothDeltaTime;
+        position.y = position.y + playerSpeed * vertical * Time.deltaTime;
 
-        position = position + move * playerSpeed * Time.deltaTime;
+        Vector3.Normalize(position);
         rigidbody.MovePosition(position);
     }
 

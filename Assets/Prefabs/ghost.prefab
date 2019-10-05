@@ -119,6 +119,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drops: {fileID: 0}
+  health: 5
   dead: 0
 --- !u!50 &6984184476387593720
 Rigidbody2D:
@@ -132,7 +133,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 55
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
@@ -187,7 +188,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 2.21
   m_BaseOffset: 1.105
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 6
   m_ObstacleAvoidanceType: 4
 --- !u!114 &2772561289972754154
 MonoBehaviour:

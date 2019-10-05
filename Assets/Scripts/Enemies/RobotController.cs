@@ -221,7 +221,7 @@ public class RobotController : MonoBehaviour
         GameObject projectileObject = Instantiate(projectilePrefab, rigidbody2D.position + Vector2.up * 0.5f, Quaternion.identity);
         EnemyProjectile projectile = projectileObject.GetComponent<EnemyProjectile>();
 
-        projectile.EnemyAttack(500);
+        projectile.EnemyAttack(2500);
 
     }
 }

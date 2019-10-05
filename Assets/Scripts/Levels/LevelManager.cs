@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        QualitySettings.vSyncCount = 0;
     }
 
     void Update()
