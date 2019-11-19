@@ -101,7 +101,7 @@ public class LevelGenerator : MonoBehaviour {
 					break; //only destroy one per iteration
 				}
 			}
-			//chance: walker pick new direction
+			//chance: walker pick new direction 
 			for (int i = 0; i < walkers.Count; i++){
 				if (Random.value < chanceWalkerChangeDir){
 					walker thisWalker = walkers[i];
